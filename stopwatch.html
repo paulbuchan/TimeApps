@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+  </head>
+  <style>
+    body {
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      text-align: center;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      margin: 0;
+    }
+    #display {
+      font-family: Arial, sans-serif;
+      font-size: calc(180vw / 8);
+      font-weight: bold;
+      flex-grow: 1;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    button {
+      padding: 5px 10px;
+      font-size: 12px;
+      color: #fff;
+      background-color: darkslategray;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  </style>
+  <body>
+    <div id="display">
+      <span id="minutes">00</span>:<span id="seconds">00</span
+      ><span id="milliseconds">000</span>
+    </div>
+    <div id="controls">
+      <button id="startBtn">Start</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <button id="resetBtn">Reset</button>
+      <button id="toggleMsBtn">Toggle MS</button>
+    </div>
+    <script>
+      const startBtn = document.getElementById("startBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const toggleMsBtn = document.getElementById("toggleMsBtn");
+      const minutesDisplay = document.getElementById("minutes");
+      const secondsDisplay = document.getElementById("seconds");
+      const millisecondsDisplay = document.getElementById("milliseconds");
+
+      let startTime;
+      let elapsedTime = 0;
+      let timerInterval;
+      let displayMilliseconds = true;
+
+      function timeToString(time, displayMs) {
+        let ms = time % 1000;
+        time = (time - ms) / 1000;
+        let secs = time % 60;
+        time = (time - secs) / 60;
+        let mins = time;
+
+        if (displayMs) {
+          return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
+            2,
+            "0"
+          )}:${String(ms).padStart(3, "0")}`;
+        } else {
+          return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
+            2,
+            "0"
+          )}`;
+        }
+      }
+
+      function updateDisplay() {
+        const displayTime = timeToString(elapsedTime, displayMilliseconds);
+        if (displayMilliseconds) {
+          [minutes, seconds, milliseconds] = displayTime.split(":");
+          millisecondsDisplay.textContent = `:${milliseconds}`;
+        } else {
+          [minutes, seconds] = displayTime.split(":");
+          millisecondsDisplay.textContent = "";
+        }
+        minutesDisplay.textContent = minutes;
+        secondsDisplay.textContent = seconds;
+      }
+
+      startBtn.addEventListener("click", () => {
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
+          elapsedTime = Date.now() - startTime;
+          updateDisplay();
+        }, 10);
+      });
+
+      stopBtn.addEventListener("click", () => {
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+        clearInterval(timerInterval);
+      });
+
+      resetBtn.addEventListener("click", () => {
+        elapsedTime = 0;
+        updateDisplay();
+      });
+
+      toggleMsBtn.addEventListener("click", () => {
+        displayMilliseconds = !displayMilliseconds;
+        updateDisplay();
+      });
+
+      // Initialize the display
+      updateDisplay();
+    </script>
+  </body>
+</html>
