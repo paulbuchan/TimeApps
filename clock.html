@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clock</title>
-  <style>
-    body {
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock</title>
+    <style>
+      body {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
         text-align: center;
         background-color: #000;
         color: #fff;
@@ -15,9 +15,9 @@
         justify-content: space-between;
         height: 100vh;
         margin: 0;
-    }
+      }
 
-    #clock {
+      #clock {
         font-family: Arial, sans-serif;
         font-size: calc(140vw / 8);
         font-weight: bold;
@@ -27,9 +27,9 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 60px;
-    }
+      }
 
-    #toggle-buttons {
+      #toggle-buttons {
         position: fixed;
         bottom: 20px;
         width: 100%;
@@ -37,68 +37,67 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-    }
+      }
 
-    button {
+      button {
         padding: 5px 10px;
         font-size: 12px;
         color: #fff;
         background-color: darkslategray;
         margin: 5px;
         cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div id="clock"></div>
-  <div id="toggle-buttons">
-    <button onclick="toggleSeconds()">Toggle Seconds</button>
-    <button onclick="toggleHourFormat()">12hr/24hr</button>
-    <button onclick="toggleAmPm()">AM/PM</button>
-  </div>
-  <script>
-    const clockElement = document.getElementById('clock');
-    let showSeconds = true;
-    let hourFormat = 24;
-    let showAmPm = false;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="clock"></div>
+    <div id="toggle-buttons">
+      <button onclick="toggleSeconds()">Toggle Seconds</button>
+      <button onclick="toggleHourFormat()">12hr/24hr</button>
+      <button onclick="toggleAmPm()">AM/PM</button>
+    </div>
+    <script>
+      const clockElement = document.getElementById("clock");
+      let showSeconds = true;
+      let hourFormat = 24;
+      let showAmPm = false;
 
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      let amPm = '';
+      function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        let amPm = "";
 
-      if (hourFormat === 12) {
-        amPm = hours >= 12 ? ' PM' : ' AM';
-        hours = hours % 12 || 12;
+        if (hourFormat === 12) {
+          amPm = hours >= 12 ? " PM" : " AM";
+          hours = hours % 12 || 12;
+        }
+
+        const formattedTime =
+          [hours, minutes.toString().padStart(2, "0")].join(":") +
+          (showSeconds ? ":" + seconds.toString().padStart(2, "0") : "");
+
+        clockElement.textContent = formattedTime + (showAmPm ? amPm : "");
       }
 
-      const formattedTime = [
-        hours.toString().padStart(2, '0'),
-        minutes.toString().padStart(2, '0'),
-      ].join(':') + (showSeconds ? ':' + seconds.toString().padStart(2, '0') : '');
+      function toggleSeconds() {
+        showSeconds = !showSeconds;
+        updateClock();
+      }
 
-      clockElement.textContent = formattedTime + (showAmPm ? amPm : '');
-    }
+      function toggleHourFormat() {
+        hourFormat = hourFormat === 24 ? 12 : 24;
+        updateClock();
+      }
 
-    function toggleSeconds() {
-      showSeconds = !showSeconds;
+      function toggleAmPm() {
+        showAmPm = !showAmPm;
+        updateClock();
+      }
+
       updateClock();
-    }
-
-    function toggleHourFormat() {
-      hourFormat = hourFormat === 24 ? 12 : 24;
-      updateClock();
-    }
-
-    function toggleAmPm() {
-      showAmPm = !showAmPm;
-      updateClock();
-    }
-
-    updateClock();
-    setInterval(updateClock, 1000);
-  </script>
-</body>
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
 </html>

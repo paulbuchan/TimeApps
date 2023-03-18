@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Timer & Stopwatch</title>
+    <title>Basic Presentation Time Apps</title>
 </head>
+
 <body>
     <style>
-        body{
-            background-color: rgb(45, 45, 45);  
+        body {
+            background-color: rgb(45, 45, 45);
             color: white;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
         }
+
         .collapsible {
-            background-color: rgb(50, 50, 50);
+            background-color: rgb(60, 60, 60);
             color: white;
             cursor: pointer;
-            padding: 1px;
-            width: 100%;
             border: none;
             text-align: left;
             outline: none;
-            font-size: 15px;
+            font-size: 1em;
         }
 
-        .active, .collapsible:hover {
+        .launch {
+            background-color: black;
+            border: none;
+            color: white;
+            /* padding: 16px 16px; */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+
+        .active,
+        .collapsible:hover {
             background-color: #555;
         }
 
@@ -35,11 +51,12 @@
             overflow: hidden;
             background-color: rgb(45, 45, 45);
         }
+
         button {
             background-color: black;
             border: none;
             color: white;
-            padding: 16px 32px;
+            padding: 0 16px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -47,11 +64,14 @@
             margin: 4px 2px;
             transition-duration: 0.4s;
             cursor: pointer;
-}
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+
         button:hover {
             background-color: gray;
             color: black;
-}
+        }
+
         header {
             position: absolute;
             margin-top: 5%;
@@ -60,96 +80,139 @@
         }
     </style>
     <center>
-    <div id="logo">
-    </div>
-    <h1>Basic Timer & Stopwatch Apps</h1>
+        <div id="logo">
+        </div>
+        <h1>Basic Presentation Time Apps</h1>
         <h3>
-            Here are instructions for using these Apps in a full screen web browser while duplicating your display. <br> <br>These can be used on or offline. 
+            These can be used on or off-line.
+            <br>
         </h3>
         <hr>
-    </div>
+        </div>
     </center>
-    <h2>Step 1: Duplicating your display</h2>
-        <button type="button" class="collapsible"><h3>Windows</h3></button>
-            <div class="content">
-            <ol>
-                <li>Connect your computer to a second display or projector.</li>
-                <li> Right-click on your desktop and select "Display settings."</li>
-                <li>Under "Multiple displays," select "Duplicate these displays."</li>
-                <li> Your computer screen should now be duplicated on the second display.</li>
-            </ol>
-            </div>
-        <button type="button" class="collapsible"><h3>Mac</h3></button>
-            <div class="content">
-                <ol>
-                <li>Connect your computer to a second display or projector.</li>
-                <li>Click on the Apple menu and select "System Preferences."</li>
-                <li>Click on "Displays" and then select the "Arrangement" tab.</li>
-                <li>Check the box next to "Mirror Displays."</li>
-                <li>Your computer screen should now be duplicated on the second display.</li>
-            </ol></div>
-    <h2>Step 2: Making your browser full screen</h2>
-    <button type="button" class="collapsible"><h3>Firefox</h3></button>
-    <div class="content"><ol>
-                <li> Press F11 on your keyboard to enter full screen mode.</li>
-                <li> To exit full screen mode, press F11 again.</li>
-            </ol></div>
-            <button type="button" class="collapsible"><h3>Chrome</h3></button>
-            <div class="content"><ol>
-                <li>Click on the three dots in the top right corner of the browser window.</li>
-                <li> Select "Fullscreen" from the drop-down menu.</li>
-                <li>To exit full screen mode, press the Esc key on your keyboard.</li>
-            </ol></div>
-            <button type="button" class="collapsible"><h3>Safari</h3></button>
-            <div class="content"><ol>
-                <li>Click on the "View" menu in the top left corner of the screen.</li>
-                <li>Select "Enter Full Screen."</li>
-                <li>To exit full screen mode, move your cursor to the top of the screen and click on the green button in the top left corner of the window.</li>
-            </ol></div>
-    <h2>Step 3: Launch</h2> 
-        <button onclick="window.location.href='countdown.html'">Launch Countdown Timer</button>
-        <button onclick="window.location.href='stopwatch.html'">Launch Stopwatch</button>
-        <button onclick="window.location.href='clock.html'">Launch Clock</button>
-        <br>
-<hr>
+    <h2>
+        Use this app with a duplicated/mirrored display, and run your browser in fullscreen mode.
+    </h2>
+    <h3>Step 1: Duplicate your display</h3>
+    <button type="button" class="collapsible">
+        <h3>Windows</h3>
+    </button>
+    <div class="content">
+        <ol>
+            <li>Connect your computer to a second display or projector.</li>
+            <li> Right-click on your desktop and select "Display settings."</li>
+            <li>Under "Multiple displays," select "Duplicate these displays."</li>
+            <li> Your computer screen should now be duplicated on the second display.</li>
+        </ol>
+    </div>
+    <button type="button" class="collapsible">
+        <h3>Mac</h3>
+    </button>
+    <div class="content">
+        <ol>
+            <li>Connect your computer to a second display or projector.</li>
+            <li>Click on the Apple menu and select "System Preferences."</li>
+            <li>Click on "Displays" and then select the "Arrangement" tab.</li>
+            <li>Check the box next to "Mirror Displays."</li>
+            <li>Your computer screen should now be duplicated on the second display.</li>
+        </ol>
+    </div>
+    <h3>Step 2: Make your browser full screen</h3>
+    <button type="button" class="collapsible">
+        <h3>Firefox</h3>
+    </button>
+    <div class="content">
+        <ol>
+            <li> Press F11 on your keyboard to enter full screen mode.</li>
+            <li> To exit full screen mode, press F11 again.</li>
+        </ol>
+    </div>
+    <button type="button" class="collapsible">
+        <h3>Chrome</h3>
+    </button>
+    <div class="content">
+        <ol>
+            <li>Click on the three dots in the top right corner of the browser window.</li>
+            <li> Select "Fullscreen" from the drop-down menu.</li>
+            <li>To exit full screen mode, press the Esc key on your keyboard.</li>
+        </ol>
+    </div>
+    <button type="button" class="collapsible">
+        <h3>Safari</h3>
+    </button>
+    <div class="content">
+        <ol>
+            <li>Click on the "View" menu in the top left corner of the screen.</li>
+            <li>Select "Enter Full Screen."</li>
+            <li>To exit full screen mode, move your cursor to the top of the screen and click on the green button in the
+                top left corner of the window.</li>
+        </ol>
+    </div>
+    <h3>Step 3: Launch</h3>
+    <button class="launch" onclick="window.location.href='countdown.html'">
+        <h3>Launch Countdown Timer</h3>
+    </button>
+    <button class="launch" onclick="window.location.href='stopwatch.html'">
+        <h3>Launch Stopwatch</h3>
+    </button>
+    <button class="launch" onclick="window.location.href='clock.html'">
+        <h3>Launch Clock</h3>
+    </button>
+    <br>
+    <hr>
     <h2>Using these Apps</h2>
-        <button type="button" class="collapsible"><h3>Countdown</h3></button>
-            <div class="content"><p>Launch Timer <br>
+    <button type="button" class="collapsible">
+        <h3>Countdown</h3>
+    </button>
+    <div class="content">
+        <p>Launch Timer <br>
             Once open, enter the time to countdown from at the bottom of the window. <br>
             The warning time sets the time which the screen will turn red. <br>
             Press "Start" to begin, and "Stop" to end. <br>
             Once time ends, you'll need to "Reset" to start a new timer. <br>
-            Pressing "Warn" will instantly turn the screen red. You can not go back to normal without resetting. <br></p>
-            </div>
-        <button type="button" class="collapsible"><h3>Stopwatch</h3></button>
-            <div class="content"><p>Launch Stopwatch <br>
+            Pressing "Warn" will instantly turn the screen red. You can not go back to normal without resetting. <br>
+        </p>
+    </div>
+    <button type="button" class="collapsible">
+        <h3>Stopwatch</h3>
+    </button>
+    <div class="content">
+        <p>Launch Stopwatch <br>
             Once open, clicking "Start" will start the stopwatch <br>
             Top stop, press the "Stop" button <br>
             The "Reset" button resets the stopwatch to zero <br>
             "Toggle MS" will toggle the display of milliseconds on screen <br></p>
-            </div>
-        <button type="button" class="collapsible"><h3>Clock</h3></button>
-            <div class="content"><p>Launch Clock <br>
+    </div>
+    <button type="button" class="collapsible">
+        <h3>Clock</h3>
+    </button>
+    <div class="content">
+        <p>Launch Clock <br>
             Once open, the clock should display on your screen <br>
             It uses your system's clock <br>
-            Use the bottons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if seconds are displayed <br>
-            <br></p>
-            </div>
+            Use the bottons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if
+            seconds are displayed <br>
+            <br>
+        </p>
+    </div>
 </body>
 <script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
     }
-  });
-}
 </script>
-</html></html>
+
+</html>
+
+</html>
