@@ -1,217 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basic Presentation Time Apps</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <style>
-        body {
-            background-color: rgb(45, 45, 45);
-            color: white;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-        }
+      body,
+      a {
+        background-color: rgb(45, 45, 45);
+        color: white;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        min-height: 100vh;
+      }
 
-        .collapsible {
-            background-color: rgb(60, 60, 60);
-            color: white;
-            cursor: pointer;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 1em;
-        }
+      .collapsible {
+        background-color: rgb(60, 60, 60);
+        color: white;
+        cursor: pointer;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 1em;
+      }
 
-        .launch {
-            background-color: black;
-            border: none;
-            color: white;
-            /* padding: 16px 16px; */
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-        }
+      .launch {
+        background-color: black;
+        border: none;
+        color: white;
+        /* padding: 16px 16px; */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
 
-        .active,
-        .collapsible:hover {
-            background-color: #555;
-        }
+      .active,
+      .collapsible:hover {
+        background-color: #555;
+      }
 
-        .content {
-            padding: 0 18px;
-            display: none;
-            overflow: hidden;
-            background-color: rgb(45, 45, 45);
-        }
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: rgb(45, 45, 45);
+      }
 
-        button {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 0 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-        }
+      button {
+        background-color: black;
+        border: none;
+        color: white;
+        padding: 0 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        border-radius: 4px;
+        border: none;
+      }
 
-        button:hover {
-            background-color: gray;
-            color: black;
-        }
+      button:hover {
+        background-color: gray;
+        color: black;
+      }
 
-        header {
-            position: absolute;
-            margin-top: 5%;
-            width: 100%;
-            text-align: center;
-        }
+      header {
+        position: absolute;
+        margin-top: 5%;
+        width: 100%;
+        text-align: center;
+      }
+
+      .footer {
+        position: static;
+        padding-right: 15px;
+        padding-top: 15px;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: rgb(163, 163, 163);
+        text-align: right;
+        min-height: 50px;
+      }
     </style>
     <center>
-        <div id="logo">
-        </div>
-        <h1>Basic Presentation Time Apps</h1>
-        <h3>
-            These can be used on or off-line.
-            <br>
-        </h3>
-        <hr>
-        </div>
+      <h1>Time Apps</h1>
+      <h2>Basic browser based apps to aid with presentations</h2>
+      <h3>Fully functionally with or without internet access</h3> <br /><br />
+      <hr />
     </center>
     <h2>
-        Use this app with a duplicated/mirrored display, and run your browser in fullscreen mode.
+      These web apps are designed to be used with your displays duplicated and browser in fullscreen mode. Optimized for display in 1920x1080.
     </h2>
-    <h3>Step 1: Duplicate your display</h3>
+    <h3>Instructions on Duplicating your display:</h3>
     <button type="button" class="collapsible">
-        <h3>Windows</h3>
+      <h3>Windows</h3>
     </button>
     <div class="content">
-        <ol>
-            <li>Connect your computer to a second display or projector.</li>
-            <li> Right-click on your desktop and select "Display settings."</li>
-            <li>Under "Multiple displays," select "Duplicate these displays."</li>
-            <li> Your computer screen should now be duplicated on the second display.</li>
-        </ol>
+      <ol>
+        <li>Connect your computer to a second display or projector.</li>
+        <li>Right-click on your desktop and select "Display settings."</li>
+        <li>Under "Multiple displays," select "Duplicate these displays."</li>
+        <li>
+          Your computer screen should now be duplicated on the second display.
+        </li>
+      </ol>
     </div>
     <button type="button" class="collapsible">
-        <h3>Mac</h3>
+      <h3>Mac</h3>
     </button>
     <div class="content">
-        <ol>
-            <li>Connect your computer to a second display or projector.</li>
-            <li>Click on the Apple menu and select "System Preferences."</li>
-            <li>Click on "Displays" and then select the "Arrangement" tab.</li>
-            <li>Check the box next to "Mirror Displays."</li>
-            <li>Your computer screen should now be duplicated on the second display.</li>
-        </ol>
+      <ol>
+        <li>Connect your computer to a second display or projector.</li>
+        <li>Click on the Apple menu and select "System Preferences."</li>
+        <li>Click on "Displays" and then select the "Arrangement" tab.</li>
+        <li>Check the box next to "Mirror Displays."</li>
+        <li>
+          Your computer screen should now be duplicated on the second display.
+        </li>
+      </ol>
     </div>
-    <h3>Step 2: Make your browser full screen</h3>
-    <button type="button" class="collapsible">
-        <h3>Firefox</h3>
-    </button>
-    <div class="content">
-        <ol>
-            <li> Press F11 on your keyboard to enter full screen mode.</li>
-            <li> To exit full screen mode, press F11 again.</li>
-        </ol>
-    </div>
-    <button type="button" class="collapsible">
-        <h3>Chrome</h3>
-    </button>
-    <div class="content">
-        <ol>
-            <li>Click on the three dots in the top right corner of the browser window.</li>
-            <li> Select "Fullscreen" from the drop-down menu.</li>
-            <li>To exit full screen mode, press the Esc key on your keyboard.</li>
-        </ol>
-    </div>
-    <button type="button" class="collapsible">
-        <h3>Safari</h3>
-    </button>
-    <div class="content">
-        <ol>
-            <li>Click on the "View" menu in the top left corner of the screen.</li>
-            <li>Select "Enter Full Screen."</li>
-            <li>To exit full screen mode, move your cursor to the top of the screen and click on the green button in the
-                top left corner of the window.</li>
-        </ol>
-    </div>
-    <h3>Step 3: Launch</h3>
-    <button class="launch" onclick="window.location.href='countdown.html'">
-        <h3>Launch Countdown Timer</h3>
-    </button>
-    <button class="launch" onclick="window.location.href='stopwatch.html'">
-        <h3>Launch Stopwatch</h3>
-    </button>
-    <button class="launch" onclick="window.location.href='clock.html'">
-        <h3>Launch Clock</h3>
-    </button>
-    <br>
     <hr>
     <h2>Using these Apps</h2>
+    <h3>These apps are very basic by design. Below are some basic instructions</h3>
     <button type="button" class="collapsible">
-        <h3>Countdown</h3>
+      <h3>Countdown</h3>
     </button>
     <div class="content">
-        <p>Launch Timer <br>
-            Once open, enter the time to countdown from at the bottom of the window. <br>
-            The warning time sets the time which the screen will turn red. <br>
-            You must set the <b>Countdown Time</b> and, if wanted, <b>Warning Time</b> before starting the timer <br>
-            Press "Start" to begin, and "Stop" to end. <br>
-            Once time ends, you'll need to "Reset" to start a new timer. <br>
-            Pressing "Warn" will instantly turn the screen red. You can not go back to normal without resetting. <br>
-        </p>
+      <p>
+        Launch Timer <br />
+        Once launched enter fullscreen mode by pressing the button. <br />
+        Enter the time to countdown from at the bottom of the window. <br />
+        The warning time sets the time which the screen will turn red. <br />
+        You must set the <b>Countdown Time</b> and, if wanted,
+        <b>Warning Time</b> before starting the timer. <br />
+        Press "Start" to begin, and "Stop" to pause/end. <br />
+        Once time ends, you'll need to "Reset" to start a new timer. <br />
+        Pressing "Warn" will instantly turn the screen red. You can not go back
+        to normal without resetting. <br />
+      </p>
     </div>
     <button type="button" class="collapsible">
-        <h3>Stopwatch</h3>
+      <h3>Stopwatch</h3>
     </button>
     <div class="content">
-        <p>Launch Stopwatch <br>
-            Once open, clicking "Start" will start the stopwatch <br>
-            Top stop, press the "Stop" button <br>
-            The "Reset" button resets the stopwatch to zero <br>
-            "Toggle MS" will toggle the display of milliseconds on screen <br></p>
+      <p>
+        Launch Stopwatch <br />
+        Once launched enter fullscreen by pressing the button. <br />
+        Clicking "Start" will start the stopwatch. <br />
+        Top pause/stop, press the "Stop" button. <br />
+        The "Reset" button resets the stopwatch to zero. <br />
+        "Toggle MS" will toggle the display of milliseconds on screen. <br />
+      </p>
     </div>
     <button type="button" class="collapsible">
-        <h3>Clock</h3>
+      <h3>Clock</h3>
     </button>
     <div class="content">
-        <p>Launch Clock <br>
-            Once open, the clock should display on your screen <br>
-            It uses your system's clock <br>
-            Use the bottons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if
-            seconds are displayed <br>
-            <br>
-        </p>
+      <p>
+        Launch Clock <br />
+        Once launched enter fullscreen by pressing the button. <br />
+        The clock should display on your screen. <br />
+        It uses your system's clock. <br />
+        Use the bottons at the bottom of the page to toggle between 12hr/24hr
+        time, displaying the AM/PM, and if seconds are displayed. <br />
+        <br />
+      </p>
     </div>
-</body>
-<script>
+    <hr />
+    <h2>Launch</h2>
+    <button class="launch" onclick="window.location.href='countdown.html'">
+      <h3>Countdown Timer</h3>
+    </button>
+    <button class="launch" onclick="window.location.href='stopwatch.html'">
+      <h3>Stopwatch</h3>
+    </button>
+    <button class="launch" onclick="window.location.href='clock.html'">
+      <h3>Clock</h3>
+    </button>
+    <div class="footer">
+      Time Apps
+      <a
+        href="https://github.com/paulbuchan/TimeApps/releases/latest"
+        target="_blank"
+        >v. 0.3
+    </div>
+  </body>
+  <script>
     var coll = document.getElementsByClassName("collapsible");
     var i;
 
     for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
     }
-</script>
 
+    document.addEventListener("DOMContentLoaded", function () {
+      const fullscreenButton = document.getElementById("fullscreenButton");
+
+      fullscreenButton.addEventListener("click", function () {
+        toggleFullscreen();
+      });
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          // Firefox
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          // Chrome, Safari and Opera
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+          // IE/Edge
+          document.documentElement.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          // Firefox
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          // Chrome, Safari and Opera
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          // IE/Edge
+          document.msExitFullscreen();
+        }
+      }
+    }
+  </script>
 </html>

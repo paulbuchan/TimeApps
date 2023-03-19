@@ -1,188 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown</title>
+    <style>
+      body {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        text-align: center;
+        background-color: #000;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+        margin: 0;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown</title>
-  <style>
-    body {
-      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-      text-align: center;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-      margin: 0;
-    }
+      h4 {
+        color: #b1b1b1;
+      }
 
-    h4 {
-      color: #b1b1b1;
-    }
+      ::placeholder {
+        color: #b1b1b1;
+      }
 
-    ::placeholder {
-      color: #b1b1b1;
-    }
+      #timer {
+        font-family: Arial, sans-serif;
+        font-size: calc(180vw / 8);
+        font-weight: bold;
+        flex-grow: 1;
+        white-space: nowrap;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 60px;
+      }
 
-    #timer {
-      font-family: Arial, sans-serif;
-      font-size: calc(180vw / 8);
-      font-weight: bold;
-      flex-grow: 1;
-      white-space: nowrap;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 60px;
-    }
+      input[type="number"] {
+        width: 35px;
+        padding: 5px;
+        margin: 0 10px;
+        font-size: 12px;
+        background-color: rgb(60, 60, 60);
+        color: #b1b1b1;
+        border-radius: 4px;
+        border: none;
+      }
 
-    input[type="number"] {
-      width: 35px;
-      padding: 5px;
-      margin: 0 10px;
-      font-size: 12px;
-      background-color: rgb(60, 60, 60);
-      color: #b1b1b1;
-      border-radius: 4px;
-      border: none;
-    }
+      button {
+        padding: 5px 10px;
+        font-size: 12px;
+        color: #b1b1b1;
+        background-color: rgb(40, 40, 40);
+        margin: 5px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: none;
+      }
 
-    button {
-      padding: 5px 10px;
-      font-size: 12px;
-      color: #b1b1b1;
-      background-color: rgb(40, 40, 40);
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 4px;
-      border: none;
-    }
-    
-    .controlBtns {
-      padding-left: 40px;
-    }
+      .controlBtns {
+        padding-left: 40px;
+      }
 
-    .controls {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-  </style>
-</head>
+      #fullscreenButton {
+        margin-right: 40px;
+      }
 
-<body>
-  <div id="timer">00:00</div>
+      .controls {
+        position: fixed;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
 
-  <div class="controls">
-    <h4>Countdown Time:</h4>
-    <input type="number" id="hours" placeholder="HH" min="0" />
-    <input type="number" id="minutes" placeholder="MM" min="0" />
-    <input type="number" id="seconds" placeholder="SS" min="0" />
-    <h4>Warning Time:</h4>
+  <body>
+    <div id="timer">00:00</div>
+
+    <div class="controls">
+      <button id="fullscreenButton"">Fullscreen</button>
+      <h4>Countdown Time:</h4>
+      <input type="number" id="hours" placeholder="HH" min="0" />
+      <input type="number" id="minutes" placeholder="MM" min="0" />
+      <input type="number" id="seconds" placeholder="SS" min="0" />
+      <h4>Warning Time:</h4>
       <input type="number" id="warning_hours" placeholder="HH" min="0" />
       <input type="number" id="warning_minutes" placeholder="MM" min="0" />
       <input type="number" id="warning_seconds" placeholder="SS" min="0" />
-    <div class="controlBtns">
-      <button onclick="startTimer()">Start</button>
-      <button onclick="stopTimer()">Stop</button>
-      <button onclick="warn()">Warn</button>
-      <button onclick="resetTimer()">Reset</button>
+      <div class="controlBtns">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="warn()">Warn</button>
+        <button onclick="resetTimer()">Reset</button>
+      </div>
     </div>
-  </div>
 
-  <script>
-    let countdown;
-    let timeRemaining = 0;
-    let warningTime = 0;
+    <script>
+      let countdown;
+      let timeRemaining = 0;
+      let warningTime = 0;
 
-    function startTimer() {
-      const hours = parseInt(document.getElementById("hours").value) || 0;
-      const minutes = parseInt(document.getElementById("minutes").value) || 0;
-      const seconds = parseInt(document.getElementById("seconds").value) || 0;
-      const warning_hours =
-        parseInt(document.getElementById("warning_hours").value) || 0;
-      const warning_minutes =
-        parseInt(document.getElementById("warning_minutes").value) || 0;
-      const warning_seconds =
-        parseInt(document.getElementById("warning_seconds").value) || 0;
+      function startTimer() {
+        const hours = parseInt(document.getElementById("hours").value) || 0;
+        const minutes = parseInt(document.getElementById("minutes").value) || 0;
+        const seconds = parseInt(document.getElementById("seconds").value) || 0;
+        const warning_hours =
+          parseInt(document.getElementById("warning_hours").value) || 0;
+        const warning_minutes =
+          parseInt(document.getElementById("warning_minutes").value) || 0;
+        const warning_seconds =
+          parseInt(document.getElementById("warning_seconds").value) || 0;
 
-      if (!timeRemaining) {
-        timeRemaining = hours * 3600 + minutes * 60 + seconds;
+        if (!timeRemaining) {
+          timeRemaining = hours * 3600 + minutes * 60 + seconds;
+        }
+
+        if (!warningTime) {
+          warningTime =
+            warning_hours * 3600 + warning_minutes * 60 + warning_seconds;
+        }
+
+        if (!countdown && timeRemaining > 0) {
+          countdown = setInterval(() => {
+            timeRemaining--;
+
+            if (timeRemaining <= warningTime) {
+              document.body.style.backgroundColor = "red";
+              document.body.style.color = "black";
+            }
+
+            updateTimerDisplay(timeRemaining);
+
+            if (timeRemaining <= 0) {
+              stopTimer();
+            }
+          }, 1000);
+        }
       }
 
-      if (!warningTime) {
-        warningTime =
-          warning_hours * 3600 + warning_minutes * 60 + warning_seconds;
+      function stopTimer() {
+        if (countdown) {
+          clearInterval(countdown);
+          countdown = null;
+        }
       }
 
-      if (!countdown && timeRemaining > 0) {
-        countdown = setInterval(() => {
-          timeRemaining--;
-
-          if (timeRemaining <= warningTime) {
-            document.body.style.backgroundColor = "red";
-            document.body.style.color = "black";
-          }
-
-          updateTimerDisplay(timeRemaining);
-
-          if (timeRemaining <= 0) {
-            stopTimer();
-          }
-        }, 1000);
+      function resetTimer() {
+        stopTimer();
+        timeRemaining = 0;
+        warningTime = 0;
+        updateTimerDisplay(timeRemaining);
+        document.body.style.backgroundColor = "#000";
+        document.body.style.color = "#fff";
+        document.getElementById("hours").value = "";
+        document.getElementById("minutes").value = "";
+        document.getElementById("seconds").value = "";
+        document.getElementById("warning_hours").value = "";
+        document.getElementById("warning_minutes").value = "";
+        document.getElementById("warning_seconds").value = "";
       }
+      function warn() {
+        if (countdown) {
+          document.body.style.backgroundColor = "red";
+          document.body.style.color = "black";
+        }
+      }
+      function updateTimerDisplay(time) {
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = time % 60;
+
+        let timerText = "";
+        if (hours > 0) {
+          timerText += hours.toString().padStart(2, "0") + ":";
+        }
+        if (minutes > 0 || hours > 0) {
+          timerText += minutes.toString().padStart(2, "0") + ":";
+        }
+        timerText += seconds.toString().padStart(2, "0");
+
+        document.getElementById("timer").innerText = timerText;
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+    const fullscreenButton = document.getElementById("fullscreenButton");
+
+    fullscreenButton.addEventListener("click", function() {
+        toggleFullscreen();
+    });
+});
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
     }
-
-    function stopTimer() {
-      if (countdown) {
-        clearInterval(countdown);
-        countdown = null;
-      }
-    }
-
-    function resetTimer() {
-      stopTimer();
-      timeRemaining = 0;
-      warningTime = 0;
-      updateTimerDisplay(timeRemaining);
-      document.body.style.backgroundColor = "#000";
-      document.body.style.color = "#fff";
-      document.getElementById("hours").value = "";
-      document.getElementById("minutes").value = "";
-      document.getElementById("seconds").value = "";
-      document.getElementById("warning_hours").value = "";
-      document.getElementById("warning_minutes").value = "";
-      document.getElementById("warning_seconds").value = "";
-    }
-    function warn() {
-      if (countdown) {
-        document.body.style.backgroundColor = "red";
-        document.body.style.color = "black";
-      }
-    }
-    function updateTimerDisplay(time) {
-      const hours = Math.floor(time / 3600);
-      const minutes = Math.floor((time % 3600) / 60);
-      const seconds = time % 60;
-
-      let timerText = "";
-      if (hours > 0) {
-        timerText += hours.toString().padStart(2, "0") + ":";
-      }
-      if (minutes > 0 || hours > 0) {
-        timerText += minutes.toString().padStart(2, "0") + ":";
-      }
-      timerText += seconds.toString().padStart(2, "0");
-
-      document.getElementById("timer").innerText = timerText;
-    }
-  </script>
-</body>
-
+}
+    </script>
+  </body>
 </html>

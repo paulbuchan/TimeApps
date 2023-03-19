@@ -21,7 +21,7 @@
 
   #display {
     font-family: Arial, sans-serif;
-    font-size: calc(180vw / 8);
+    font-size: calc(170vw / 8);
     font-weight: bold;
     flex-grow: 1;
     white-space: nowrap;
@@ -51,6 +51,11 @@
     align-items: center;
     flex-wrap: wrap;
   }
+
+  #fullscreenButton {
+    margin-right: 30px;
+  }
+
 </style>
 
 <body>
@@ -58,10 +63,11 @@
     <span id="minutes">00</span>:<span id="seconds">00</span><span id="milliseconds">00</span>
   </div>
   <div id="controls">
-    <button id="startBtn">Start</button>
-    <button id="stopBtn" disabled>Stop</button>
-    <button id="resetBtn">Reset</button>
-    <button id="toggleMsBtn">Toggle MS</button>
+      <button id="fullscreenButton"">Fullscreen</button>
+      <button id="startBtn">Start</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <button id="resetBtn">Reset</button>
+      <button id="toggleMsBtn">Toggle MS</button>
   </div>
   <script>
     const startBtn = document.getElementById("startBtn");
@@ -138,6 +144,40 @@
 
     // Initialize the display
     updateDisplay();
+
+    // Fullscreen Script
+    document.addEventListener("DOMContentLoaded", function() {
+    const fullscreenButton = document.getElementById("fullscreenButton");
+
+    fullscreenButton.addEventListener("click", function() {
+        toggleFullscreen();
+    });
+});
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+}
+
   </script>
 </body>
 

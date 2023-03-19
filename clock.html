@@ -54,6 +54,7 @@
   <body>
     <div id="clock"></div>
     <div id="toggle-buttons">
+      <button id="fullscreenButton"">Fullscreen</button>
       <button onclick="toggleSeconds()">Toggle Seconds</button>
       <button onclick="toggleHourFormat()">12hr/24hr</button>
       <button onclick="toggleAmPm()">AM/PM</button>
@@ -100,6 +101,39 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+
+      document.addEventListener("DOMContentLoaded", function() {
+    const fullscreenButton = document.getElementById("fullscreenButton");
+
+    fullscreenButton.addEventListener("click", function() {
+        toggleFullscreen();
+    });
+});
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+}
+
     </script>
   </body>
 </html>
