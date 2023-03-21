@@ -104,6 +104,7 @@
       let countdown;
       let timeRemaining = 0;
       let warningTime = 0;
+      let warnState = false;
 
       function startTimer() {
         const hours = parseInt(document.getElementById("hours").value) || 0;
@@ -164,12 +165,24 @@
         document.getElementById("warning_minutes").value = "";
         document.getElementById("warning_seconds").value = "";
       }
+      // function warn() {
+      //   if (countdown) {
+      //     document.body.style.backgroundColor = "red";
+      //     document.body.style.color = "black";
+      //   }
       function warn() {
         if (countdown) {
-          document.body.style.backgroundColor = "red";
-          document.body.style.color = "black";
+            warnState = !warnState;
+            if (warnState) {
+                document.body.style.backgroundColor = "F00";
+                document.body.style.color = "#000";
+            } else {
+                document.body.style.backgroundColor = "#000";
+                document.body.style.color = "#fff";
+            }
         }
       }
+
       function updateTimerDisplay(time) {
         const hours = Math.floor(time / 3600);
         const minutes = Math.floor((time % 3600) / 60);

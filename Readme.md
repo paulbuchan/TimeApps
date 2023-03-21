@@ -1,11 +1,17 @@
 # Time App
-## Current Release v0.3
+## Current Release v0.4
 ---
 This is a collection of timing apps that can be used to aid presenters. Designed to run full screen on a web browser and displayed on a downstage monitor. These are writen in basic HTML, CSS, and JavaScript so that they can easily be run without any additional tools/software installed. You can also use them on or off-line. They have been optimized to run on displays that are 1920x1080. 
 
 ---
 
 ### Change Log
+
+>#### v0.4 - 2023.03.20
+> - Countdown - <b>Warn</b> button now toggles warning state
+> - Fixed sizing issue on Stopwatch
+> - Defaulted Clock App to 12hr view with AM/PM enabled
+> - Corrected grammer and spelling on Index page
 
 >#### v0.3 - 2023.03.19
 > - Updated all Apps to include Fullscreen Button
