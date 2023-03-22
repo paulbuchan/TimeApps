@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #appSwitcher {
+            position: fixed;
+            top: 20px;
+            align-items: center;
+            padding-left: 15px;
+      }
+
+        #icon {
+            width: 15px;
+            height: 15px;
+            fill:#b1b1b1;
+      }
+
+        body {
+          font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+          text-align: center;
+          background-color: black;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+  
+        h4 {
+          color: #b1b1b1;
+        }
+  
+        ::placeholder {
+          color: #b1b1b1;
+        }
+  
+        #countdown {
+          font-family: Arial, sans-serif;
+          font-size: calc(180vw / 8);
+          font-weight: bold;
+          white-space: nowrap;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          
+        }
+        #swdisplay {
+            font-family: Arial, sans-serif;
+            font-size: calc(160vw / 8);
+            font-weight: bold;
+            flex-grow: 1;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        #clock {
+            font-family: Arial, sans-serif;
+            font-size: calc(130vw / 8);
+            font-weight: bold;
+            flex-grow: 1;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+  
+        input[type="number"] {
+          width: 35px;
+          padding: 5px;
+          margin: 0 10px;
+          font-size: 12px;
+          background-color: rgb(60, 60, 60);
+          color: #b1b1b1;
+          border-radius: 4px;
+          border: none;
+        }
+  
+        button {
+          padding: 5px 10px;
+          font-size: 12px;
+          color: #b1b1b1;
+          background-color: rgb(40, 40, 40);
+          margin: 5px;
+          cursor: pointer;
+          border-radius: 4px;
+          border: none;
+        }
+  
+        .controlBtns {
+          padding-left: 40px;
+        }
+  
+        #cdfsButton {
+          margin-right: 40px;
+        }
+        
+        #swfsButton {
+          margin-right: 40px;
+        }
+        #clfsButton {
+          margin-right: 40px;
+        }
+  
+        .controls {
+          position: fixed;
+          bottom: 20px;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        /* #masterCountdown {
+            display: block;
+        }
+        #masterStopwatch {
+            display: none;
+        }
+        #masterClock {
+            display: none;
+        } */
+
+      </style>
+
+
+
+
+
+<body>
+    <div id="appSwitcher">
+        <button id="iconcountdown">
+            <svg id="icon" class="icon" viewBox="0 0 384 512">
+                <path d="M0 32C0 14.3 14.3 0 32 0H64 320h32c17.7 0 32 14.3 32 32s-14.3 32-32 32V75c0 42.4-16.9 83.1-46.9 113.1L237.3 256l67.9 67.9c30 30 46.9 70.7 46.9 113.1v11c17.7 0 32 14.3 32 32s-14.3 32-32 32H320 64 32c-17.7 0-32-14.3-32-32s14.3-32 32-32V437c0-42.4 16.9-83.1 46.9-113.1L146.7 256 78.9 188.1C48.9 158.1 32 117.4 32 75V64C14.3 64 0 49.7 0 32zM96 64V75c0 25.5 10.1 49.9 28.1 67.9L192 210.7l67.9-67.9c18-18 28.1-42.4 28.1-67.9V64H96zm0 384H288V437c0-25.5-10.1-49.9-28.1-67.9L192 301.3l-67.9 67.9c-18 18-28.1 42.4-28.1 67.9v11z"/></svg>
+        </button>
+        <button id="iconstopwatch" onclick="resetCount()">
+            <svg id="icon" class="icon" viewBox="0 0 448 512">
+                <path d="M152 0c-13.3 0-24 10.7-24 24s10.7 24 24 24h32V97.4C80.4 109.3 0 197.2 0 304C0 418.9 93.1 512 208 512s208-93.1 208-208c0-44.7-14.1-86.1-38.1-120l31-31c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-29.2 29.2c-31.1-27.5-70.4-45.9-113.8-50.9V48h32c13.3 0 24-10.7 24-24s-10.7-24-24-24H152zM48 304a160 160 0 1 1 320 0A160 160 0 1 1 48 304zm172-48v96c0 28.7 23.3 52 52 52s52-23.3 52-52V256c0-28.7-23.3-52-52-52s-52 23.3-52 52zm52-12c6.6 0 12 5.4 12 12v96c0 6.6-5.4 12-12 12s-12-5.4-12-12V256c0-6.6 5.4-12 12-12zm-132.4 8.6c1.7-5.1 6.5-8.6 11.9-8.6c6.9 0 12.5 5.6 12.5 12.5v2.2c0 3.6-1.3 7.1-3.7 9.8l-39 43.9c-13.7 15.4-21.2 35.2-21.2 55.8V384c0 11 9 20 20 20h64c11 0 20-9 20-20s-9-20-20-20H140.2c.9-9.2 4.7-17.9 10.9-24.9l39-43.9c8.9-10 13.8-23 13.8-36.4v-2.2c0-29-23.5-52.5-52.5-52.5c-22.6 0-42.7 14.5-49.8 35.9l-.6 1.7c-3.5 10.5 2.2 21.8 12.6 25.3s21.8-2.2 25.3-12.6l.6-1.7z"/></svg>
+        </button>
+        <button id="iconclock" onclick="resetCount()">
+            <svg id="icon" class="icon" viewBox="0 0 512 512">
+                <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+        </button>
+    </div>
+
+    <div id="masterCountdown" style="display:block;">
+        <div id="countdown">00:00</div>
+
+        <div class="controls">
+        <button id="cdfsButton"">Fullscreen</button>
+            <h4>Countdown Time:</h4>
+        <input type="number" id="hours" placeholder="HH" min="0" />
+        <input type="number" id="minutes" placeholder="MM" min="0" />
+        <input type="number" id="seconds" placeholder="SS" min="0" />
+            <h4>Warning Time:</h4>
+        <input type="number" id="warning_hours" placeholder="HH" min="0" />
+        <input type="number" id="warning_minutes" placeholder="MM" min="0" />
+        <input type="number" id="warning_seconds" placeholder="SS" min="0" />
+            <div class="controlBtns">
+                <button onclick="startCount()">Start</button>
+                <button onclick="stopCount()">Stop</button>
+                <button onclick="warn()">Warn</button>
+                <button onclick="resetCount()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="masterStopwatch" style="display: none;"">
+        <div id="swdisplay">
+            <span id="swminutes">00</span>:<span id="swseconds">00</span><span id="swmilliseconds">00</span>
+          </div>
+          <div class="controls">
+              <button id="swfsButton"">Fullscreen</button>
+              <button id="startBtn">Start</button>
+              <button id="stopBtn" disabled>Stop</button>
+              <button id="resetBtn">Reset</button>
+              <button id="toggleMsBtn">Toggle MS</button>
+          </div>
+    </div>
+
+    <div id="masterClock" style="display: none;"">
+        <div id="clock">
+        </div>
+        <div class="controls">
+          <button id="clfsButton"">Fullscreen</button>
+          <button onclick="toggleSeconds()">Toggle Seconds</button>
+          <button onclick="toggleHourFormat()">12hr/24hr</button>
+          <button onclick="toggleAmPm()">AM/PM</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    // APP SWITCHER
+    function showDiv(divID) {
+        // START WITH ALL HIDDEN
+        document.getElementById('masterCountdown').style.display = 'none';
+        document.getElementById('masterStopwatch').style.display = 'none';
+        document.getElementById('masterClock').style.display = 'none';
+        
+        //SHOW SELECTED
+        document.getElementById(divID).style.display = 'block';
+    }
+        //LISTENERS
+        document.getElementById('iconcountdown').addEventListener('click', () => showDiv('masterCountdown'));
+        document.getElementById('iconstopwatch').addEventListener('click', () => showDiv('masterStopwatch'));
+        document.getElementById('iconclock').addEventListener('click', () => showDiv('masterClock'));
+
+
+ // COUNTDOWN START
+        let countdown;
+        let timeRemaining = 0;
+        let warningTime = 0;
+        let warnState = false;
+        let startTime;
+        let elapsedTime = 0;
+        let timerInterval;
+        let displayMilliseconds = true;
+
+      function startCount() {
+        const hours = parseInt(document.getElementById("hours").value) || 0;
+        const minutes = parseInt(document.getElementById("minutes").value) || 0;
+        const seconds = parseInt(document.getElementById("seconds").value) || 0;
+        const warning_hours =
+          parseInt(document.getElementById("warning_hours").value) || 0;
+        const warning_minutes =
+          parseInt(document.getElementById("warning_minutes").value) || 0;
+        const warning_seconds =
+          parseInt(document.getElementById("warning_seconds").value) || 0;
+
+        if (!timeRemaining) {
+          timeRemaining = hours * 3600 + minutes * 60 + seconds;
+        }
+
+        if (!warningTime) {
+          warningTime =
+            warning_hours * 3600 + warning_minutes * 60 + warning_seconds;
+        }
+
+        if (!countdown && timeRemaining > 0) {
+          countdown = setInterval(() => {
+            timeRemaining--;
+
+            if (timeRemaining <= warningTime) {
+              document.body.style.backgroundColor = "red";
+              document.body.style.color = "black";
+            }
+
+            updateCountDisplay(timeRemaining);
+
+            if (timeRemaining <= 0) {
+              stopCount();
+            }
+          }, 1000);
+        }
+      }
+
+      function stopCount() {
+        if (countdown) {
+          clearInterval(countdown);
+          countdown = null;
+        }
+      }
+
+      function resetCount() {
+        stopCount();
+        timeRemaining = 0;
+        warningTime = 0;
+        updateCountDisplay(timeRemaining);
+        document.body.style.backgroundColor = "#000";
+        document.body.style.color = "#fff";
+        document.getElementById("hours").value = "";
+        document.getElementById("minutes").value = "";
+        document.getElementById("seconds").value = "";
+        document.getElementById("warning_hours").value = "";
+        document.getElementById("warning_minutes").value = "";
+        document.getElementById("warning_seconds").value = "";
+      }
+
+      function warn() {
+        if (countdown) {
+            warnState = !warnState;
+            if (warnState) {
+                document.body.style.backgroundColor = "red";
+                document.body.style.color = "black";
+            } else {
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+            }
+        }
+      }
+
+
+      function updateCountDisplay(time) {
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = time % 60;
+
+        let countText = "";
+        if (hours > 0) {
+          countText += hours.toString().padStart(2, "0") + ":";
+        }
+        if (minutes > 0 || hours > 0) {
+          countText += minutes.toString().padStart(2, "0") + ":";
+        }
+        countText += seconds.toString().padStart(2, "0");
+
+        document.getElementById("countdown").innerText = countText;
+      }
+    document.addEventListener("DOMContentLoaded", function() {
+    const fullscreenButton = document.getElementById("cdfsButton");
+
+    cdfsButton.addEventListener("click", function() {
+        toggleFullscreen();
+    });
+});
+
+        function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+}
+    // START TIMER
+    // Define Constrants
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const toggleMsBtn = document.getElementById("toggleMsBtn");
+    const minutesDisplay = document.getElementById("swminutes");
+    const secondsDisplay = document.getElementById("swseconds");
+    const millisecondsDisplay = document.getElementById("swmilliseconds");
+
+    function timeToString(time, displayMs) {
+      let ms = time % 1000;
+      time = (time - ms) / 1000;
+      let secs = time % 60;
+      time = (time - secs) / 60;
+      let mins = time;
+
+      if (displayMs) {
+        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
+          2,
+          "0"
+        )}:${String(ms).padStart(3, "0")}`;
+      } else {
+        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
+          2,
+          "0"
+        )}`;
+      }
+    }
+
+    function updateDisplay() {
+      const displayTime = timeToString(elapsedTime, displayMilliseconds);
+      if (displayMilliseconds) {
+        [minutes, seconds, milliseconds] = displayTime.split(":");
+        millisecondsDisplay.textContent = `:${milliseconds}`;
+      } else {
+        [minutes, seconds] = displayTime.split(":");
+        millisecondsDisplay.textContent = "";
+      }
+      minutesDisplay.textContent = minutes;
+      secondsDisplay.textContent = seconds;
+    }
+
+    startBtn.addEventListener("click", () => {
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      startTime = Date.now() - elapsedTime;
+      timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        updateDisplay();
+      }, 10);
+    });
+
+    stopBtn.addEventListener("click", () => {
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      clearInterval(timerInterval);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      elapsedTime = 0;
+      updateDisplay();
+    });
+
+    toggleMsBtn.addEventListener("click", () => {
+      displayMilliseconds = !displayMilliseconds;
+      updateDisplay();
+    });
+
+    // Initialize the display
+    updateDisplay();
+
+
+    const swfsButton = document.getElementById("swfsButton");
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+        }
+    }
+
+    swfsButton.addEventListener("click", toggleFullscreen);
+
+
+    //START OF CLOCK
+
+    const clockElement = document.getElementById("clock");
+      let showSeconds = true;
+      let hourFormat = 12;
+      let showAmPm = true;
+
+      function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        let amPm = "";
+
+        if (hourFormat === 12) {
+          amPm = hours >= 12 ? " PM" : " AM";
+          hours = hours % 12 || 12;
+        }
+
+        const formattedTime =
+          [hours, minutes.toString().padStart(2, "0")].join(":") +
+          (showSeconds ? ":" + seconds.toString().padStart(2, "0") : "");
+
+        clockElement.textContent = formattedTime + (showAmPm ? amPm : "");
+      }
+
+      function toggleSeconds() {
+        showSeconds = !showSeconds;
+        updateClock();
+      }
+
+      function toggleHourFormat() {
+        hourFormat = hourFormat === 24 ? 12 : 24;
+        updateClock();
+      }
+
+      function toggleAmPm() {
+        showAmPm = !showAmPm;
+        updateClock();
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      document.addEventListener("DOMContentLoaded", function() {
+    const clfsButton = document.getElementById("clfsButton");
+
+    // Fullscreen Toggle button
+    clfsButton.addEventListener("click", function() {
+        toggleFullscreen();
+    });
+});
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+}
+
+     // Start of F for fullscreen
+      // Check if fullscreen
+      function isFullscreen() {
+          return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      }
+
+      // Toggle fullscreen
+      function toggleFullscreenF(element) {
+          if (!isFullscreen()) {
+              if (element.requestFullscreen) {
+                  element.requestFullscreen();
+              } else if (element.webkitRequestFullscreen) {
+                  element.webkitRequestFullscreen();
+              } else if (element.mozRequestFullScreen) {
+                  element.mozRequestFullScreen();
+              } else if (element.msRequestFullscreen) {
+                  element.msRequestFullscreen();
+              }
+          } else {
+              if (document.exitFullscreen) {
+                  document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) {
+                  document.webkitExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                  document.mozCancelFullScreen();
+              } else if (document.msExitFullscreen) {
+                  document.msExitFullscreen();
+              }
+          }
+      }
+
+      // listener for the 'key' event
+      document.addEventListener('keydown', function(event) {
+          // Check if the pressed key is 'F'
+          if (event.key === 'F' || event.key === 'f') {
+              toggleFullscreenF(document.documentElement);
+          }
+      });
+
+</script>
+</html>
