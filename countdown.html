@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Countdown</title>
     <style>
+      #appSwitcher {
+        display: flex;
+        position: fixed;
+        top: 20px;
+        width: 100%;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-left: 15px;
+      }
+
+      #icon {
+        width: 15px;
+        height: 15px;
+        fill:#b1b1b1;
+      }
+
       body {
         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
         text-align: center;
@@ -80,6 +96,16 @@
   </head>
 
   <body>
+    <div id="appSwitcher">
+      <button id="stopwatch" onclick="window.location.href='stopwatch.html';">
+        <svg id="icon" class="icon" viewBox="0 0 448 512">
+          <path d="M152 0c-13.3 0-24 10.7-24 24s10.7 24 24 24h32V97.4C80.4 109.3 0 197.2 0 304C0 418.9 93.1 512 208 512s208-93.1 208-208c0-44.7-14.1-86.1-38.1-120l31-31c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-29.2 29.2c-31.1-27.5-70.4-45.9-113.8-50.9V48h32c13.3 0 24-10.7 24-24s-10.7-24-24-24H152zM48 304a160 160 0 1 1 320 0A160 160 0 1 1 48 304zm172-48v96c0 28.7 23.3 52 52 52s52-23.3 52-52V256c0-28.7-23.3-52-52-52s-52 23.3-52 52zm52-12c6.6 0 12 5.4 12 12v96c0 6.6-5.4 12-12 12s-12-5.4-12-12V256c0-6.6 5.4-12 12-12zm-132.4 8.6c1.7-5.1 6.5-8.6 11.9-8.6c6.9 0 12.5 5.6 12.5 12.5v2.2c0 3.6-1.3 7.1-3.7 9.8l-39 43.9c-13.7 15.4-21.2 35.2-21.2 55.8V384c0 11 9 20 20 20h64c11 0 20-9 20-20s-9-20-20-20H140.2c.9-9.2 4.7-17.9 10.9-24.9l39-43.9c8.9-10 13.8-23 13.8-36.4v-2.2c0-29-23.5-52.5-52.5-52.5c-22.6 0-42.7 14.5-49.8 35.9l-.6 1.7c-3.5 10.5 2.2 21.8 12.6 25.3s21.8-2.2 25.3-12.6l.6-1.7z"/></svg>
+        </button>
+      <button id="clock" onclick="window.location.href='clock.html';">
+      <svg id="icon" class="icon" viewBox="0 0 512 512">
+        <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+      </button>
+    </div>
     <div id="timer">00:00</div>
 
     <div class="controls">
@@ -104,6 +130,7 @@
       let countdown;
       let timeRemaining = 0;
       let warningTime = 0;
+      let warnState = false;
 
       function startTimer() {
         const hours = parseInt(document.getElementById("hours").value) || 0;
@@ -164,12 +191,20 @@
         document.getElementById("warning_minutes").value = "";
         document.getElementById("warning_seconds").value = "";
       }
+
       function warn() {
         if (countdown) {
-          document.body.style.backgroundColor = "red";
-          document.body.style.color = "black";
+            warnState = !warnState;
+            if (warnState) {
+                document.body.style.backgroundColor = "red";
+                document.body.style.color = "black";
+            } else {
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+            }
         }
       }
+
       function updateTimerDisplay(time) {
         const hours = Math.floor(time / 3600);
         const minutes = Math.floor((time % 3600) / 60);
@@ -217,6 +252,46 @@ function toggleFullscreen() {
         }
     }
 }
+
+        // Start of F for fullscreen
+        // Check if fullscreen
+        function isFullscreen() {
+            return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen(element) {
+            if (!isFullscreen()) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // listener for the 'key' event
+        document.addEventListener('keydown', function(event) {
+            // Check if the pressed key is 'F'
+            if (event.key === 'F' || event.key === 'f') {
+                toggleFullscreen(document.documentElement);
+            }
+        });
+        
     </script>
   </body>
 </html>
