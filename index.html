@@ -133,7 +133,8 @@
     </div>
     <hr>
     <h2>Using these Apps</h2>
-    <h3>These apps are very basic by design. Below are some basic instructions</h3>
+    <h3>These apps are very basic by design. Below are some basic instructions.</h3>
+    <h4>For all Apps, the <b>F</b> Key toggles fullscreen.</h4>
     <button type="button" class="collapsible">
       <h3>Countdown</h3>
     </button>
@@ -147,8 +148,8 @@
         is optional) before starting the timer. <br />
         Press "Start" to begin, and "Stop" to pause/end. <br />
         Once time ends, you'll need to "Reset" to start a new timer. <br />
-        Pressing "Warn" will instantly turn the screen red. You can not go back
-        to normal without resetting. <br />
+        Pressing "Warn" will toggle the background red. <br />
+        Once the countdown reaches the warn time the "Warn" button is not functional. <br \>
       </p>
     </div>
     <button type="button" class="collapsible">
@@ -194,7 +195,7 @@
       <a
         href="https://github.com/paulbuchan/TimeApps/releases/latest"
         target="_blank"
-        >v. 0.3
+        >v. 0.4
     </div>
   </body>
   <script>
@@ -211,44 +212,6 @@
           content.style.display = "block";
         }
       });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const fullscreenButton = document.getElementById("fullscreenButton");
-
-      fullscreenButton.addEventListener("click", function () {
-        toggleFullscreen();
-      });
-    });
-
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-          // Firefox
-          document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          // Chrome, Safari and Opera
-          document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) {
-          // IE/Edge
-          document.documentElement.msRequestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          // Firefox
-          document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-          // Chrome, Safari and Opera
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-          // IE/Edge
-          document.msExitFullscreen();
-        }
-      }
     }
   </script>
 </html>
