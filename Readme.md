@@ -9,7 +9,7 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 
 >#### v0.4 - 2023.03.##
 > - Countdown - <b>Warn</b> button now toggles warning state
-> - Pressing F key toggles fullscreen mode
+> - Pressing <b>F</b> key toggles fullscreen mode
 > - Fixed sizing issue on Stopwatch
 > - Defaulted Clock App to 12hr view with AM/PM enabled
 > - Corrected grammer and spelling on Index page
