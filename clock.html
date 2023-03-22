@@ -133,6 +133,7 @@
       document.addEventListener("DOMContentLoaded", function() {
     const fullscreenButton = document.getElementById("fullscreenButton");
 
+    // Fullscreen Toggle button
     fullscreenButton.addEventListener("click", function() {
         toggleFullscreen();
     });
@@ -162,6 +163,7 @@ function toggleFullscreen() {
     }
 }
 
+      // Start of F for fullscreen
       // Check if fullscreen
       function isFullscreen() {
           return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;

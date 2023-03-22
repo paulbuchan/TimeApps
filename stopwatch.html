@@ -97,6 +97,7 @@
       <button id="toggleMsBtn">Toggle MS</button>
   </div>
   <script>
+    // Define Constrants
     const startBtn = document.getElementById("startBtn");
     const stopBtn = document.getElementById("stopBtn");
     const resetBtn = document.getElementById("resetBtn");
@@ -181,6 +182,7 @@
     });
 });
 
+//Fullscreen button
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
         if (document.documentElement.requestFullscreen) {
@@ -205,6 +207,7 @@ function toggleFullscreen() {
     }
 }
 
+        // Begin F for Fullscreen
         // Check if fullscreen
         function isFullscreen() {
             return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
