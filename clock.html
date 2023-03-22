@@ -90,8 +90,8 @@
     <script>
       const clockElement = document.getElementById("clock");
       let showSeconds = true;
-      let hourFormat = 24;
-      let showAmPm = false;
+      let hourFormat = 12;
+      let showAmPm = true;
 
       function updateClock() {
         const now = new Date();
@@ -161,6 +161,44 @@ function toggleFullscreen() {
         }
     }
 }
+
+      // Check if fullscreen
+      function isFullscreen() {
+          return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      }
+
+      // Toggle fullscreen
+      function toggleFullscreen(element) {
+          if (!isFullscreen()) {
+              if (element.requestFullscreen) {
+                  element.requestFullscreen();
+              } else if (element.webkitRequestFullscreen) {
+                  element.webkitRequestFullscreen();
+              } else if (element.mozRequestFullScreen) {
+                  element.mozRequestFullScreen();
+              } else if (element.msRequestFullscreen) {
+                  element.msRequestFullscreen();
+              }
+          } else {
+              if (document.exitFullscreen) {
+                  document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) {
+                  document.webkitExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                  document.mozCancelFullScreen();
+              } else if (document.msExitFullscreen) {
+                  document.msExitFullscreen();
+              }
+          }
+      }
+
+      // listener for the 'key' event
+      document.addEventListener('keydown', function(event) {
+          // Check if the pressed key is 'F'
+          if (event.key === 'F' || event.key === 'f') {
+              toggleFullscreen(document.documentElement);
+          }
+      });
 
     </script>
   </body>
