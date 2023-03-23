@@ -61,7 +61,7 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 
 ## Change Log
 
-> #### v0.5 - 2023.03.22
+> #### v0.5 - 2023.03.23
 >
 > - Major Update --> Single page experience
 > - All exsisting features in place
