@@ -131,6 +131,25 @@
           flex-wrap: wrap;
         }
 
+        #version {
+          position: fixed;
+          bottom: 0;
+          right: 5px;
+          padding: 5px;
+          font-family: 'Courier New';
+          font-size: small;
+          color:rgb(40, 40, 40);
+        }
+
+        #timeApps {
+          position: fixed;
+          bottom: 0;
+          left: 5px;
+          padding: 5px;
+          font-family: 'Courier New';
+          font-size: small;
+        }
+        #timeApps a:-webkit-any-link { color:rgb(40, 40, 40); text-decoration: none;}
       </style>
 
 
@@ -198,6 +217,12 @@
           <button onclick="toggleAmPm()">AM/PM</button>
         </div>
     </div>
+    <div id="timeApps">
+      <a href="https://github.com/paulbuchan/TimeApps">TimeApps</a>
+    </div>
+    <div id="version">
+      v0.5
+    </div>
 
 </body>
 
@@ -228,7 +253,7 @@
         document.getElementById('iconclock').addEventListener('click', () => resetTimer());
         
 
- // COUNTDOWN START ---------------------------------------------------------
+ // COUNTDOWN START & DECLARATIONS ---------------------------------------------------------
         let countdown;
         let timeRemaining = 0;
         let warningTime = 0;
@@ -323,13 +348,19 @@
         }
         if (minutes > 0 || hours > 0) {
           countText += minutes.toString().padStart(2, "0") + ":";
-        }
+        } else {
+            countText += ":";
+          }
         countText += seconds.toString().padStart(2, "0");
 
         document.getElementById("countdown").innerText = countText;
       }
+    
+    
+      // FS BUTTON
     document.addEventListener("DOMContentLoaded", function() {
     const fullscreenButton = document.getElementById("cdfsButton");
+
 
     cdfsButton.addEventListener("click", function() {
         toggleFullscreen();
@@ -426,6 +457,7 @@
     updateDisplay();
 
 
+    // FS BUTTON
     const swfsButton = document.getElementById("swfsButton");
 
     function toggleFullscreen() {
@@ -502,7 +534,7 @@
       document.addEventListener("DOMContentLoaded", function() {
     const clfsButton = document.getElementById("clfsButton");
 
-    // Fullscreen Toggle button
+    // FS BUTTON
     clfsButton.addEventListener("click", function() {
         toggleFullscreen();
     });
