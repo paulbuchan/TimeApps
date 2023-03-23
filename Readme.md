@@ -13,12 +13,12 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 ---
 ### Countdown Timer
 - Enter the time to countdown from at the bottom of the window.
-- The warning time sets the time which the screen will turn red.
-- You must set the <b>Countdown Time</b> and the <b>Warning Time</b> is optional before starting the timer. (Warning Time is optional)
+- The warning time sets the time at which the screen will turn red.
+- You must set the <b>Countdown Time</b> and the <b>Warning Time</b> before starting the timer. (Warning Time is optional)
 - Press "Start" to begin, and "Stop" to pause/end. 
 - Once time ends, you'll need to "Reset" to start a new timer. 
 - Pressing "Warn" will toggle the background red.
-- Once the countdown reaches the warn time the "Warn" button is not functional.
+- Once the countdown reaches the warn time the "Warn" button is no longer functional.
 
 ---
 ### Stopwatch (Timer)
@@ -29,7 +29,7 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 
 ---
 ### Clock
-- It uses your system's clock.
+- Uses your system's clock to get the time.
 - Use the bottons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if seconds are displayed. 
 
 
@@ -52,7 +52,7 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 
 ---
 ---
-These are writen in basic HTML, CSS, and JavaScript so that they can easily be run without any additional tools/software installed. You can also use them on or off-line. 
+These are writen in basic HTML, CSS, and JavaScript so that they can easily be run without any additional tools/software installed. You can also use them on or off-line. The only file needed is <i>TimeApps.html</i>
 
 ---
 ---
@@ -93,4 +93,4 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 
 > #### v0.1 - 2023.03.18
 >
-> - Initial Commit
+> - Initial GitHub Commit
