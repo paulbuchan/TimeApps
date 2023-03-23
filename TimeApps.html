@@ -15,8 +15,8 @@
       }
 
         #icon {
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
             fill:#b1b1b1;
       }
 
@@ -253,8 +253,8 @@
             timeRemaining--;
 
             if (timeRemaining <= warningTime) {
-              document.body.style.backgroundColor = "red";
-              document.body.style.color = "black";
+              document.body.style.backgroundColor = "#f00";
+              document.body.style.color = "#000";
             }
 
             updateCountDisplay(timeRemaining);
@@ -292,11 +292,11 @@
         if (countdown) {
             warnState = !warnState;
             if (warnState) {
-                document.body.style.backgroundColor = "red";
-                document.body.style.color = "black";
+                document.body.style.backgroundColor = "#F00";
+                document.body.style.color = "#000";
             } else {
-                document.body.style.backgroundColor = "black";
-                document.body.style.color = "white";
+                document.body.style.backgroundColor = "#000";
+                document.body.style.color = "#fff";
             }
         }
       }
@@ -406,6 +406,7 @@
       updateDisplay();
     }
 
+    //MS Toggle
     toggleMsBtn.addEventListener("click", () => {
       displayMilliseconds = !displayMilliseconds;
       updateDisplay();
@@ -552,7 +553,7 @@ function toggleFullscreen() {
           }
       }
 
-      // listener for the 'key' event
+      // listener for 'key' press (event)
       document.addEventListener('keydown', function(event) {
           // Check if the pressed key is 'F'
           if (event.key === 'F' || event.key === 'f') {
