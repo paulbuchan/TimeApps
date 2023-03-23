@@ -63,7 +63,9 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 
 > #### v0.5 - 2023.03.22
 >
-> - Major Update --> Single Page experience
+> - Major Update --> Single page experience
+> - All exsisting features in place
+> - Countdown: Added persistant colon in front of seconds
 
 > #### v0.4 - 2023.03.22
 >
