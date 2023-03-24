@@ -25,7 +25,6 @@
           text-align: center;
           background-color: black;
           color: #b1b1b1;
-          font-weight: bold;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -148,9 +147,25 @@
           padding: 5px;
           font-family: 'Courier New';
           font-size: small;
+          color:rgb(40, 40, 40);
+          text-decoration: none;
         }
-        #timeApps a:-webkit-any-link { color:rgb(40, 40, 40); text-decoration: none;}
-      </style>
+
+        /* CHROME */
+        #timeApps a:-webkit-any-link { 
+          color:rgb(40, 40, 40); 
+          text-decoration: none;
+        }
+        
+        /* FIREFOX */
+        #timeApps > a:nth-child(1) {
+          color: rgb(40, 40, 40);
+          text-decoration: none;
+        }
+
+    </style>
+
+
 
 
 <body>
@@ -183,10 +198,10 @@
         <input type="number" id="warning_minutes" placeholder="MM" min="0" />
         <input type="number" id="warning_seconds" placeholder="SS" min="0" /></div>  
             <div class="controlBtns">
-                <button onclick="startCount()">Start</button>
-                <button onclick="stopCount()">Stop</button>
-                <button onclick="warn()">Warn</button>
-                <button onclick="resetCount()">Reset</button>
+                <button id="cdStartbtn" onclick="startCount()">Start</button>
+                <button id="cdStopbtn" onclick="stopCount()">Stop</button>
+                <button id="cdWarnbtn" onclick="warn()">Warn</button>
+                <button id="cdResetbtn" onclick="resetCount()">Reset</button>
             </div>
         </div>
     </div>
@@ -198,11 +213,8 @@
           <div class="controls">
               <button id="swfsButton"">Fullscreen</button>
               <button onclick="startTimer()">Start</button>
-              <!-- <button id="startBtn">Start</button> -->
               <button onclick="stopTimer()">Stop</button>
-              <!-- <button id="stopBtn" disabled>Stop</button> -->
               <button onclick="resetTimer()">Reset</button>
-              <!-- <button id="resetBtn">Reset</button> -->
               <button id="toggleMsBtn">Toggle MS</button>
           </div>
     </div>
@@ -221,7 +233,7 @@
       <a href="https://github.com/paulbuchan/TimeApps">TimeApps</a>
     </div>
     <div id="version">
-      v0.5
+      v0.6
     </div>
 
 </body>
@@ -263,6 +275,13 @@
         let timerInterval;
         let displayMilliseconds = true;
 
+      cdStartbtn.addEventListener('click', function () {
+        cdResetbtn.disabled = true;
+      });
+      cdStopbtn.addEventListener('click', function () {
+        cdResetbtn.disabled = false;
+      });
+      
       function startCount() {
         const hours = parseInt(document.getElementById("hours").value) || 0;
         const minutes = parseInt(document.getElementById("minutes").value) || 0;
@@ -328,7 +347,7 @@
             warnState = !warnState;
             if (warnState) {
                 document.body.style.backgroundColor = "#F00";
-                document.body.style.color = "#000";
+                document.body.style.color = "#fff";
             } else {
                 document.body.style.backgroundColor = "#000";
                 document.body.style.color = "#fff";
@@ -507,7 +526,7 @@
         }
 
         const formattedTime =
-          [hours, minutes.toString().padStart(2, "0")].join(":") +
+          [hours.toString().padStart(hourFormat === 24 ? 2 : 1, "0"), minutes.toString().padStart(2, "0")].join(":") +
           (showSeconds ? ":" + seconds.toString().padStart(2, "0") : "");
 
         clockElement.textContent = formattedTime + (showAmPm ? amPm : "");

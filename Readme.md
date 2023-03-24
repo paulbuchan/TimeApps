@@ -1,6 +1,6 @@
 # Time App
 
-## Current Release v0.5
+## Current Release v0.6
 
 ---
 
@@ -60,6 +60,12 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 
 
 ## Change Log
+
+> #### v0.6 - 2023.03.24
+>
+> - Fixed Reset bug - Countdown
+> - Added Leading Zero in 24hr time - Clock
+> - Minor tweeks
 
 > #### v0.5 - 2023.03.23
 >
