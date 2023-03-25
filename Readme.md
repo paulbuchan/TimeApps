@@ -1,17 +1,18 @@
 # Time App
 
-## Current Release v0.6
+## Current Release v0.7
 
 ---
 
 This is a collection of timing apps that can be used to aid presenters. Designed to run full screen on a web browser and displayed on a downstage monitor. They have been optimized to run on displays that are 1920x1080.
 
-> Once launched enter fullscreen mode by pressing the button, or pressing the "F" key.
+> - Once launched enter fullscreen mode by pressing the button, or pressing the "**F**" key.
+> - You can switch Apps by pressing the icons in the top left corner, or by pressing the "**1**", "**2**", or "**3**" keys. 
 
 ---
 ## App Instructions
 ---
-### Countdown Timer
+### Countdown Timer - 1 
 - Enter the time to countdown from at the bottom of the window.
 - The warning time sets the time at which the screen will turn red.
 - You must set the <b>Countdown Time</b> and the <b>Warning Time</b> before starting the timer. (Warning Time is optional)
@@ -21,14 +22,14 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 - Once the countdown reaches the warn time the "Warn" button is no longer functional.
 
 ---
-### Stopwatch (Timer)
+### Stopwatch (Timer) - 2
 - Clicking "Start" will start the stopwatch.
 - To pause/stop, press the "Stop" button.
 - The "Reset" button resets the stopwatch to zero.
 - "Toggle MS" will toggle the display of milliseconds on screen.
 
 ---
-### Clock
+### Clock - 3
 - Uses your system's clock to get the time.
 - Use the bottons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if seconds are displayed. 
 
@@ -60,6 +61,12 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 
 
 ## Change Log
+
+> #### v0.7 - 2023.03.25
+>
+> - Added Shortcut Keys to switch Apps
+> - Fixed spacing
+> - Minor bug fixes & improvemnts
 
 > #### v0.6 - 2023.03.24
 >

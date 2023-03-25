@@ -48,12 +48,17 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: #fff;
-          
         }
+
+        #countdown span {
+          display: inline-block;
+          width: 1ch;
+          text-align: center;
+        }
+
         #swdisplay {
             font-family: Arial, sans-serif;
-            font-size: calc(160vw / 8);
+            font-size: calc(140vw / 8);
             font-weight: bold;
             flex-grow: 1;
             white-space: nowrap;
@@ -62,6 +67,13 @@
             align-items: center;
             margin-bottom: 60px;
         }
+
+        #swminutes span, #swseconds span, #swmilliseconds span {
+          display: inline-block;
+          width: 1ch;
+          text-align: center;
+        }   
+
         #clock {
             font-family: Arial, sans-serif;
             font-size: calc(130vw / 8);
@@ -74,16 +86,19 @@
             margin-bottom: 60px;
         }
 
-  
-        input[type="number"] {
-          width: 35px;
-          padding: 5px;
-          margin: 0 3px;
-          font-size: 12px;
-          background-color: rgb(60, 60, 60);
-          color: #b1b1b1;
-          border-radius: 4px;
-          border: none;
+        #clock span {
+          display: inline-block;
+          width: 1ch;
+          text-align: center;
+        }
+
+        .am-pm-space {
+          font-size: 10%;
+        }
+
+        .am-pm-text {
+          font-size: calc(80vw / 8);
+          padding-top: 5%;
         }
 
         .countdownEntry {
@@ -109,6 +124,7 @@
           padding-left: 40px;
         }
   
+        /* FULL SCREEN BUTTONS */
         #cdfsButton {
           margin-right: 40px;
         }
@@ -120,6 +136,17 @@
           margin-right: 40px;
         }
   
+        input[type="number"] {
+          width: 35px;
+          padding: 5px;
+          margin: 0 3px;
+          font-size: 12px;
+          background-color: rgb(60, 60, 60);
+          color: #b1b1b1;
+          border-radius: 4px;
+          border: none;
+        }
+
         .controls {
           position: fixed;
           bottom: 20px;
@@ -129,7 +156,8 @@
           align-items: center;
           flex-wrap: wrap;
         }
-
+        
+        /* FOOTER TEXT */
         #version {
           position: fixed;
           bottom: 0;
@@ -233,7 +261,7 @@
       <a href="https://github.com/paulbuchan/TimeApps">TimeApps</a>
     </div>
     <div id="version">
-      v0.6
+      v0.7
     </div>
 
 </body>
@@ -264,6 +292,34 @@
         document.getElementById('iconclock').addEventListener('click', () => stopTimer());
         document.getElementById('iconclock').addEventListener('click', () => resetTimer());
         
+        //KEY LISTENERS
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (key === '1' || key === '2' || key === '3') {
+                event.preventDefault(); // Prevent default behavior for these keys
+            }
+
+            switch (key) {
+                case '1':
+                    showDiv('masterCountdown');
+                    stopTimer();
+                    resetTimer();
+                    break;
+                case '2':
+                    showDiv('masterStopwatch');
+                    stopCount();
+                    resetCount();
+                    break;
+                case '3':
+                    showDiv('masterClock');
+                    stopCount();
+                    resetCount();
+                    stopTimer();
+                    resetTimer();
+                    break;
+            }
+        });
+
 
  // COUNTDOWN START & DECLARATIONS ---------------------------------------------------------
         let countdown;
@@ -274,6 +330,8 @@
         let elapsedTime = 0;
         let timerInterval;
         let displayMilliseconds = true;
+
+        document.body.style.color = "#fff";
 
       cdStartbtn.addEventListener('click', function () {
         cdResetbtn.disabled = true;
@@ -325,6 +383,11 @@
           clearInterval(countdown);
           countdown = null;
         }
+        if (timeRemaining !== 0) {
+          cdResetbtn.disabled = true;
+        } else {
+          cdResetbtn.disabled = false;
+        }
       }
 
       function resetCount() {
@@ -347,7 +410,7 @@
             warnState = !warnState;
             if (warnState) {
                 document.body.style.backgroundColor = "#F00";
-                document.body.style.color = "#fff";
+                document.body.style.color = "#000";
             } else {
                 document.body.style.backgroundColor = "#000";
                 document.body.style.color = "#fff";
@@ -363,19 +426,14 @@
 
         let countText = "";
         if (hours > 0) {
-          countText += hours.toString().padStart(2, "0") + ":";
+          countText += `<span>${hours.toString().padStart(2, "0")[0]}</span><span>${hours.toString().padStart(2, "0")[1]}</span>:`;
         }
-        if (minutes > 0 || hours > 0) {
-          countText += minutes.toString().padStart(2, "0") + ":";
-        } else {
-            countText += ":";
-          }
-        countText += seconds.toString().padStart(2, "0");
+        countText += `<span>${minutes.toString().padStart(2, "0")[0]}</span><span>${minutes.toString().padStart(2, "0")[1]}</span>:`;
+        countText += `<span>${seconds.toString().padStart(2, "0")[0]}</span><span>${seconds.toString().padStart(2, "0")[1]}</span>`;
 
-        document.getElementById("countdown").innerText = countText;
+        document.getElementById("countdown").innerHTML = countText;
       }
-    
-    
+
       // FS BUTTON
     document.addEventListener("DOMContentLoaded", function() {
     const fullscreenButton = document.getElementById("cdfsButton");
@@ -440,14 +498,15 @@
       const displayTime = timeToString(elapsedTime, displayMilliseconds);
       if (displayMilliseconds) {
         [minutes, seconds, milliseconds] = displayTime.split(":");
-        millisecondsDisplay.textContent = `:${milliseconds}`;
+        millisecondsDisplay.innerHTML = `:<span>${milliseconds.slice(0, 1)}</span><span>${milliseconds.slice(1, 2)}</span><span>${milliseconds.slice(2, 3)}</span>`;
       } else {
         [minutes, seconds] = displayTime.split(":");
-        millisecondsDisplay.textContent = "";
+        millisecondsDisplay.innerHTML = "";
       }
-      minutesDisplay.textContent = minutes;
-      secondsDisplay.textContent = seconds;
+      minutesDisplay.innerHTML = `<span>${minutes.slice(0, 1)}</span><span>${minutes.slice(1, 2)}</span>`;
+      secondsDisplay.innerHTML = `<span>${seconds.slice(0, 1)}</span><span>${seconds.slice(1, 2)}</span>`;
     }
+
 
     function startTimer() {
       startTime = Date.now() - elapsedTime;
@@ -521,15 +580,19 @@
         let amPm = "";
 
         if (hourFormat === 12) {
-          amPm = hours >= 12 ? " PM" : " AM";
+          amPm = hours >= 12 ? "PM" : "AM";
           hours = hours % 12 || 12;
         }
 
         const formattedTime =
-          [hours.toString().padStart(hourFormat === 24 ? 2 : 1, "0"), minutes.toString().padStart(2, "0")].join(":") +
-          (showSeconds ? ":" + seconds.toString().padStart(2, "0") : "");
+          `<span>${hours.toString().padStart(hourFormat === 12 && hours < 10 ? 1 : 2, "0")[0]}</span>` +
+          (hourFormat === 12 && hours < 10 ? '' : `<span>${hours.toString().padStart(2, "0")[1]}</span>`) +
+          `:<span>${minutes.toString().padStart(2, "0")[0]}</span><span>${minutes.toString().padStart(2, "0")[1]}</span>` +
+          (showSeconds
+            ? `:<span>${seconds.toString().padStart(2, "0")[0]}</span><span>${seconds.toString().padStart(2, "0")[1]}</span>`
+            : "");
 
-        clockElement.textContent = formattedTime + (showAmPm ? amPm : "");
+            clockElement.innerHTML = formattedTime + (showAmPm ? '<span class="am-pm-space"></span><span class="am-pm-text">' + amPm + '</span>': "");
       }
 
       function toggleSeconds() {
@@ -543,8 +606,10 @@
       }
 
       function toggleAmPm() {
-        showAmPm = !showAmPm;
-        updateClock();
+        if (hourFormat === 12) {
+          showAmPm = !showAmPm;
+          updateClock();
+        }
       }
 
       updateClock();
