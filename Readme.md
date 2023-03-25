@@ -66,7 +66,7 @@ These are writen in basic HTML, CSS, and JavaScript so that they can easily be r
 >
 > - Added Shortcut Keys to switch Apps
 > - Fixed spacing
-> - Minor bug fixes & improvemnts
+> - Minor bug fixes & improvements
 
 > #### v0.6 - 2023.03.24
 >
