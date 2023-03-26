@@ -80,7 +80,7 @@ These are written in HTML, CSS, and JavaScript so that they can easily be run wi
 
 ## Change Log
 
-> #### v1.0 - 2023.03.25
+> #### v1.0 - 2023.03.26
 >
 > - Initial Public Release
 > - Minor bug fixes & improvements
