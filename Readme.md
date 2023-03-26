@@ -10,6 +10,8 @@ This is a collection of timing apps that can be used to aid presenters. Designed
 - You can switch Apps by pressing the icons in the top left corner, or by pressing the "**D**", "**U**", or "**C**" keys.
 
 ---
+**[Online Demo](https://paulbuchan.github.io/TimeApps/TimeApps.html)**
+---
 
 ## App Instructions
 
