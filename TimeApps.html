@@ -76,7 +76,7 @@
 
         #clock {
             font-family: Arial, sans-serif;
-            font-size: calc(130vw / 8);
+            font-size: calc(150vw / 8);
             font-weight: bold;
             flex-grow: 1;
             white-space: nowrap;
@@ -261,7 +261,7 @@
       <a href="https://github.com/paulbuchan/TimeApps">TimeApps</a>
     </div>
     <div id="version">
-      v0.7
+      v1.0
     </div>
 
 </body>
@@ -294,23 +294,23 @@
         
         //KEY LISTENERS
         document.addEventListener('keydown', (event) => {
-            const key = event.key;
-            if (key === '1' || key === '2' || key === '3') {
+            const key = event.key.toLowerCase();
+            if (key === 'd' || key === 'u' || key === 'c') {
                 event.preventDefault(); // Prevent default behavior for these keys
             }
 
             switch (key) {
-                case '1':
+                case 'd':
                     showDiv('masterCountdown');
                     stopTimer();
                     resetTimer();
                     break;
-                case '2':
+                case 'u':
                     showDiv('masterStopwatch');
                     stopCount();
                     resetCount();
                     break;
-                case '3':
+                case 'c':
                     showDiv('masterClock');
                     stopCount();
                     resetCount();
@@ -472,6 +472,7 @@
     const minutesDisplay = document.getElementById("swminutes");
     const secondsDisplay = document.getElementById("swseconds");
     const millisecondsDisplay = document.getElementById("swmilliseconds");
+    let timerRunning = false;
 
     // FUNCTIONS
     function timeToString(time, displayMs) {
@@ -509,20 +510,26 @@
 
 
     function startTimer() {
-      startTime = Date.now() - elapsedTime;
-      timerInterval = setInterval(() => {
+      if (!timerRunning) { 
+        timerRunning = true;
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
         elapsedTime = Date.now() - startTime;
         updateDisplay();
-      }, 10);
+        }, 10);
+      }
     }
 
     function stopTimer() {
+      timerRunning = false;
       clearInterval(timerInterval);
     }
 
     function resetTimer() {
+      if (!timerRunning) {
       elapsedTime = 0;
       updateDisplay();
+      }
     }
 
     //MS Toggle
