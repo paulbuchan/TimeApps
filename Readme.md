@@ -1,21 +1,21 @@
 # Time App
 
-## Current Release v1.0
+## Current Release v1.1
+**[Online Demo](https://paulbuchan.github.io/TimeApps/TimeApps.html)**
 
----
 
 This is a collection of timing apps that can be used to aid presenters. Designed to run full screen on a web browser and displayed on a downstage monitor. They have been optimized to run on displays that are 1920x1080.
 
 - Once launched enter full screen mode by pressing the button, or pressing the "**F**" key.
 - You can switch Apps by pressing the icons in the top left corner, or by pressing the "**D**", "**U**", or "**C**" keys.
+- Press "**Escape**" to close the help screen.
 
----
-**[Online Demo](https://paulbuchan.github.io/TimeApps/TimeApps.html)**
----
+<br>
+
 
 ## App Instructions
 
----
+
 
 ### Countdown Timer 
 Shortcut: **D**own
@@ -26,7 +26,7 @@ Shortcut: **D**own
 - Press "Start" to begin, and "Stop" to pause/end.
 - Once time ends, you'll need to "Reset" to start a new timer.
 - Pressing "Warn" will toggle the background red.
-- Once the countdown reaches the warning time the "Warn" button is no longer functional.
+- The "Warn" button works until the countdown naturally reaches the warning time.
 - The countdown is limited in display to double digit hours,
   although it will countdown from higher.
 
@@ -39,7 +39,7 @@ Shortcut: **U**p
 - To pause/stop, press the "Stop" button.
 - The "Reset" button resets the stopwatch to zero.
 - "Toggle MS" will toggle the display of milliseconds on screen.
-- The stopwatch will not display hours, it continues to count minutes.
+- The stopwatch will display hours when needed (over 1 hour), otherwise shows minutes and seconds.
 
 ---
 
@@ -50,10 +50,10 @@ Shortcut: **C**lock
 - Use the buttons at the bottom of the page to toggle between 12hr/24hr time, displaying the AM/PM, and if seconds are displayed.
 
 ---
-
+<br>
 ## Duplicate Screen Instructions
 
----
+
 
 ### Windows
 
@@ -69,8 +69,9 @@ Shortcut: **C**lock
 3. Click on "Displays" and then select the "Arrangement" tab.
 4. Check the box next to "Mirror Displays."
    <b>Your computer screen should now be duplicated on the second display.</b>
-
----
+<br>
+<br>
+<br>
 
 ---
 
@@ -78,9 +79,17 @@ These are written in HTML, CSS, and JavaScript so that they can easily be run wi
 
 ---
 
----
+<br>
+<br>
 
 ## Change Log
+
+> #### v1.1 - 2025.10.02
+>
+> - Fixed stopwatch overflow for times over 99 minutes
+> - Improved warning button functionality  
+> - Added Escape key to close help screen
+> - Enhanced reliability and error handling
 
 > #### v1.0 - 2023.03.26
 >
