@@ -228,7 +228,7 @@
         <div id="countdown">00:00</div>
 
         <div class="controls">
-        <button id="cdfsButton"">Fullscreen</button>
+        <button id="cdfsButton">Fullscreen</button>
         <div class="countdownEntry">    Countdown from:
         <input type="number" id="hours" placeholder="HH" min="0" />
         <input type="number" id="minutes" placeholder="MM" min="0" />
@@ -273,17 +273,21 @@
     <div id="masterHelp" style="display: none;">
       <div id="help">
         <h1>Help</h1>
+        <div class="controls" style="margin-bottom: 20px;">
+          <button onclick="showDiv('masterCountdown')">Close Help</button>
+        </div>
         <b><u>General Use</u></b> <br>
         For the most part, the apps are self explanatory. <br>
         You must stop before resetting. <br>
         Warning time is optional, but must be entered before starting the countdown. <br> 
-        Changing apps will reset them. <br>
+        Changing apps, or opening help, will reset any active apps. <br>
         <br>
         <b><u>Shortcut Keys</u></b> <br>
-            - "F"ull Screen <br>
-            - Countdown - "D"own <br>
-            - Stopwatch - "U"p <br>
-            - "C"lock <br>  
+            "F"ull Screen <br>
+            Countdown - "D"own <br>
+            Stopwatch - "U"p <br>
+            "C"lock <br>
+            "Escape" - Close Help <br>
       </div>
     </div>
 
@@ -299,6 +303,22 @@
 
 <script>
 
+    // Clock interval management (declared early for use in showDiv)
+    let clockInterval = null;
+    
+    function startClock() {
+        if (!clockInterval && typeof updateClock !== 'undefined') {
+            clockInterval = setInterval(updateClock, 1000);
+        }
+    }
+    
+    function stopClock() {
+        if (clockInterval) {
+            clearInterval(clockInterval);
+            clockInterval = null;
+        }
+    }
+
     // APP SWITCHER NAV ---------------------------------------------------
     function showDiv(divID) {
         // START WITH ALL HIDDEN
@@ -307,8 +327,16 @@
         document.getElementById('masterClock').style.display = 'none';
         document.getElementById('masterHelp').style.display = 'none';
         
+        // Stop clock when switching away
+        stopClock();
+        
         //SHOW SELECTED
         document.getElementById(divID).style.display = 'block';
+        
+        // Start clock when switching to it
+        if (divID === 'masterClock') {
+            startClock();
+        }
     }
         //LISTENERS
         document.getElementById('iconcountdown').addEventListener('click', () => showDiv('masterCountdown'));
@@ -327,7 +355,7 @@
         //KEY LISTENERS
         document.addEventListener('keydown', (event) => {
             const key = event.key.toLowerCase();
-            if (key === 'd' || key === 'u' || key === 'c') {
+            if (key === 'd' || key === 'u' || key === 'c' || key === 'escape') {
                 event.preventDefault(); // Prevent default behavior for these keys
             }
 
@@ -349,6 +377,12 @@
                     stopTimer();
                     resetTimer();
                     break;
+                case 'escape':
+                    // Close help screen and return to countdown
+                    if (document.getElementById('masterHelp').style.display !== 'none') {
+                        showDiv('masterCountdown');
+                    }
+                    break;
             }
         });
 
@@ -356,14 +390,13 @@
 
 
  // COUNTDOWN START & DECLARATIONS ---------------------------------------------------------
+        const cdStartbtn = document.getElementById("cdStartbtn");
+        const cdStopbtn = document.getElementById("cdStopbtn");
+        const cdResetbtn = document.getElementById("cdResetbtn");
         let countdown;
         let timeRemaining = 0;
         let warningTime = 0;
         let warnState = false;
-        let startTime;
-        let elapsedTime = 0;
-        let timerInterval;
-        let displayMilliseconds = true;
 
         document.body.style.color = "#fff";
 
@@ -375,23 +408,44 @@
       });
       
       function startCount() {
-        const hours = parseInt(document.getElementById("hours").value) || 0;
-        const minutes = parseInt(document.getElementById("minutes").value) || 0;
-        const seconds = parseInt(document.getElementById("seconds").value) || 0;
-        const warning_hours =
-          parseInt(document.getElementById("warning_hours").value) || 0;
-        const warning_minutes =
-          parseInt(document.getElementById("warning_minutes").value) || 0;
-        const warning_seconds =
-          parseInt(document.getElementById("warning_seconds").value) || 0;
+        // Get and validate input values
+        let hours = parseInt(document.getElementById("hours").value) || 0;
+        let minutes = parseInt(document.getElementById("minutes").value) || 0;
+        let seconds = parseInt(document.getElementById("seconds").value) || 0;
+        let warning_hours = parseInt(document.getElementById("warning_hours").value) || 0;
+        let warning_minutes = parseInt(document.getElementById("warning_minutes").value) || 0;
+        let warning_seconds = parseInt(document.getElementById("warning_seconds").value) || 0;
+
+        // Validate and constrain input values
+        hours = Math.max(0, Math.min(99, hours));
+        minutes = Math.max(0, Math.min(59, minutes));
+        seconds = Math.max(0, Math.min(59, seconds));
+        warning_hours = Math.max(0, Math.min(99, warning_hours));
+        warning_minutes = Math.max(0, Math.min(59, warning_minutes));
+        warning_seconds = Math.max(0, Math.min(59, warning_seconds));
+
+        // Check if any countdown time is set
+        if (hours === 0 && minutes === 0 && seconds === 0) {
+          alert("Please enter a valid countdown time.");
+          return;
+        }
+
+        // Calculate total times
+        const totalCountdownTime = hours * 3600 + minutes * 60 + seconds;
+        const totalWarningTime = warning_hours * 3600 + warning_minutes * 60 + warning_seconds;
+
+        // Validate warning time is not greater than countdown time
+        if (totalWarningTime > totalCountdownTime) {
+          alert("Warning time cannot be greater than countdown time.");
+          return;
+        }
 
         if (!timeRemaining) {
-          timeRemaining = hours * 3600 + minutes * 60 + seconds;
+          timeRemaining = totalCountdownTime;
         }
 
         if (!warningTime) {
-          warningTime =
-            warning_hours * 3600 + warning_minutes * 60 + warning_seconds;
+          warningTime = totalWarningTime;
         }
 
         if (!countdown && timeRemaining > 0) {
@@ -428,6 +482,7 @@
         stopCount();
         timeRemaining = 0;
         warningTime = 0;
+        warnState = false;  // Reset warning state
         updateCountDisplay(timeRemaining);
         document.body.style.backgroundColor = "#000";
         document.body.style.color = "#fff";
@@ -440,7 +495,18 @@
       }
 
       function warn() {
-        if (countdown) {
+        // Only allow manual warning toggle when countdown hasn't reached warning time naturally
+        if (countdown && timeRemaining > warningTime) {
+            warnState = !warnState;
+            if (warnState) {
+                document.body.style.backgroundColor = "#F00";
+                document.body.style.color = "#000";
+            } else {
+                document.body.style.backgroundColor = "#000";
+                document.body.style.color = "#fff";
+            }
+        } else if (!countdown) {
+            // Allow warning toggle when countdown is not running
             warnState = !warnState;
             if (warnState) {
                 document.body.style.backgroundColor = "#F00";
@@ -460,12 +526,22 @@
 
         let countText = "";
         if (hours > 0) {
-          countText += `<span>${hours.toString().padStart(2, "0")[0]}</span><span>${hours.toString().padStart(2, "0")[1]}</span>:`;
+          const hoursStr = hours.toString().padStart(2, "0");
+          countText += `<span>${safeSliceCountdown(hoursStr, 0, 1)}</span><span>${safeSliceCountdown(hoursStr, 1, 2)}</span>:`;
         }
-        countText += `<span>${minutes.toString().padStart(2, "0")[0]}</span><span>${minutes.toString().padStart(2, "0")[1]}</span>:`;
-        countText += `<span>${seconds.toString().padStart(2, "0")[0]}</span><span>${seconds.toString().padStart(2, "0")[1]}</span>`;
+        const minutesStr = minutes.toString().padStart(2, "0");
+        const secondsStr = seconds.toString().padStart(2, "0");
+        countText += `<span>${safeSliceCountdown(minutesStr, 0, 1)}</span><span>${safeSliceCountdown(minutesStr, 1, 2)}</span>:`;
+        countText += `<span>${safeSliceCountdown(secondsStr, 0, 1)}</span><span>${safeSliceCountdown(secondsStr, 1, 2)}</span>`;
 
         document.getElementById("countdown").innerHTML = countText;
+      }
+
+      // Helper function for safe string slicing in countdown
+      function safeSliceCountdown(str, start, end) {
+        if (!str || typeof str !== 'string') return '0';
+        const result = str.slice(start, end);
+        return result || '0';
       }
 
       // FS BUTTON
@@ -478,35 +554,42 @@
     });
 });
 
+        // Global fullscreen function (consolidated)
         function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-            document.documentElement.msRequestFullscreen();
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+                !document.mozFullScreenElement && !document.msFullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    document.documentElement.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
+            }
         }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
-        }
-    }
-}
     // START STOPWATCH ----------------------------------------------------------
     // DEFINE CONSTRAINTS
     const minutesDisplay = document.getElementById("swminutes");
     const secondsDisplay = document.getElementById("swseconds");
     const millisecondsDisplay = document.getElementById("swmilliseconds");
+    const toggleMsBtn = document.getElementById("toggleMsBtn");
     let timerRunning = false;
+    let startTime;
+    let elapsedTime = 0;
+    let timerInterval;
+    let displayMilliseconds = true;
 
     // FUNCTIONS
     function timeToString(time, displayMs) {
@@ -514,32 +597,74 @@
       time = (time - ms) / 1000;
       let secs = time % 60;
       time = (time - secs) / 60;
-      let mins = time;
+      let mins = time % 60;
+      let hours = Math.floor(time / 60);
 
-      if (displayMs) {
-        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
-          2,
-          "0"
-        )}:${String(ms).padStart(3, "0")}`;
+      // Cap at 99:59:59 to prevent display overflow
+      if (hours > 99) {
+        hours = 99;
+        mins = 59;
+        secs = 59;
+        ms = 999;
+      }
+
+      // For stopwatch, show hours only if > 0, otherwise just minutes (up to 99)
+      if (hours > 0) {
+        if (displayMs) {
+          return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}:${String(ms).padStart(3, "0")}`;
+        } else {
+          return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+        }
       } else {
-        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
-          2,
-          "0"
-        )}`;
+        // Original format for under 1 hour
+        if (displayMs) {
+          return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}:${String(ms).padStart(3, "0")}`;
+        } else {
+          return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+        }
       }
     }
 
     function updateDisplay() {
       const displayTime = timeToString(elapsedTime, displayMilliseconds);
+      const parts = displayTime.split(":");
+      
       if (displayMilliseconds) {
-        [minutes, seconds, milliseconds] = displayTime.split(":");
-        millisecondsDisplay.innerHTML = `:<span>${milliseconds.slice(0, 1)}</span><span>${milliseconds.slice(1, 2)}</span><span>${milliseconds.slice(2, 3)}</span>`;
+        if (parts.length === 4) {
+          // Format: HH:MM:SS:mmm (with hours)
+          const [hours, minutes, seconds, milliseconds] = parts;
+          minutesDisplay.innerHTML = `<span>${safeSlice(hours, 0, 1)}</span><span>${safeSlice(hours, 1, 2)}</span>`;
+          secondsDisplay.innerHTML = `<span>${safeSlice(minutes, 0, 1)}</span><span>${safeSlice(minutes, 1, 2)}</span>`;
+          millisecondsDisplay.innerHTML = `:<span>${safeSlice(seconds, 0, 1)}</span><span>${safeSlice(seconds, 1, 2)}</span>:<span>${safeSlice(milliseconds, 0, 1)}</span><span>${safeSlice(milliseconds, 1, 2)}</span><span>${safeSlice(milliseconds, 2, 3)}</span>`;
+        } else {
+          // Format: MM:SS:mmm (under 1 hour)
+          const [minutes, seconds, milliseconds] = parts;
+          minutesDisplay.innerHTML = `<span>${safeSlice(minutes, 0, 1)}</span><span>${safeSlice(minutes, 1, 2)}</span>`;
+          secondsDisplay.innerHTML = `<span>${safeSlice(seconds, 0, 1)}</span><span>${safeSlice(seconds, 1, 2)}</span>`;
+          millisecondsDisplay.innerHTML = `:<span>${safeSlice(milliseconds, 0, 1)}</span><span>${safeSlice(milliseconds, 1, 2)}</span><span>${safeSlice(milliseconds, 2, 3)}</span>`;
+        }
       } else {
-        [minutes, seconds] = displayTime.split(":");
-        millisecondsDisplay.innerHTML = "";
+        if (parts.length === 3) {
+          // Format: HH:MM:SS (with hours)
+          const [hours, minutes, seconds] = parts;
+          minutesDisplay.innerHTML = `<span>${safeSlice(hours, 0, 1)}</span><span>${safeSlice(hours, 1, 2)}</span>`;
+          secondsDisplay.innerHTML = `<span>${safeSlice(minutes, 0, 1)}</span><span>${safeSlice(minutes, 1, 2)}</span>`;
+          millisecondsDisplay.innerHTML = `:<span>${safeSlice(seconds, 0, 1)}</span><span>${safeSlice(seconds, 1, 2)}</span>`;
+        } else {
+          // Format: MM:SS (under 1 hour)
+          const [minutes, seconds] = parts;
+          minutesDisplay.innerHTML = `<span>${safeSlice(minutes, 0, 1)}</span><span>${safeSlice(minutes, 1, 2)}</span>`;
+          secondsDisplay.innerHTML = `<span>${safeSlice(seconds, 0, 1)}</span><span>${safeSlice(seconds, 1, 2)}</span>`;
+          millisecondsDisplay.innerHTML = "";
+        }
       }
-      minutesDisplay.innerHTML = `<span>${minutes.slice(0, 1)}</span><span>${minutes.slice(1, 2)}</span>`;
-      secondsDisplay.innerHTML = `<span>${seconds.slice(0, 1)}</span><span>${seconds.slice(1, 2)}</span>`;
+    }
+
+    // Helper function for safe string slicing
+    function safeSlice(str, start, end) {
+      if (!str || typeof str !== 'string') return '0';
+      const result = str.slice(start, end);
+      return result || '0';
     }
 
 
@@ -561,8 +686,8 @@
 
     function resetTimer() {
       if (!timerRunning) {
-      elapsedTime = 0;
-      updateDisplay();
+        elapsedTime = 0;
+        updateDisplay();
       }
     }
 
@@ -579,29 +704,6 @@
     // FS BUTTON
     const swfsButton = document.getElementById("swfsButton");
 
-    function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) { // Firefox
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { // IE/Edge
-                document.msExitFullscreen();
-            }
-        }
-    }
 
     swfsButton.addEventListener("click", toggleFullscreen);
 
@@ -625,15 +727,26 @@
           hours = hours % 12 || 12;
         }
 
+        const hoursStr = hours.toString().padStart(hourFormat === 12 && hours < 10 ? 1 : 2, "0");
+        const minutesStr = minutes.toString().padStart(2, "0");
+        const secondsStr = seconds.toString().padStart(2, "0");
+        
         const formattedTime =
-          `<span>${hours.toString().padStart(hourFormat === 12 && hours < 10 ? 1 : 2, "0")[0]}</span>` +
-          (hourFormat === 12 && hours < 10 ? '' : `<span>${hours.toString().padStart(2, "0")[1]}</span>`) +
-          `:<span>${minutes.toString().padStart(2, "0")[0]}</span><span>${minutes.toString().padStart(2, "0")[1]}</span>` +
+          `<span>${safeSliceClock(hoursStr, 0, 1)}</span>` +
+          (hourFormat === 12 && hours < 10 ? '' : `<span>${safeSliceClock(hoursStr, 1, 2)}</span>`) +
+          `:<span>${safeSliceClock(minutesStr, 0, 1)}</span><span>${safeSliceClock(minutesStr, 1, 2)}</span>` +
           (showSeconds
-            ? `:<span>${seconds.toString().padStart(2, "0")[0]}</span><span>${seconds.toString().padStart(2, "0")[1]}</span>`
+            ? `:<span>${safeSliceClock(secondsStr, 0, 1)}</span><span>${safeSliceClock(secondsStr, 1, 2)}</span>`
             : "");
 
             clockElement.innerHTML = formattedTime + (showAmPm ? '<span class="am-pm-space"></span><span class="am-pm-text">' + amPm + '</span>': "");
+      }
+
+      // Helper function for safe string slicing in clock
+      function safeSliceClock(str, start, end) {
+        if (!str || typeof str !== 'string') return '0';
+        const result = str.slice(start, end);
+        return result || '0';
       }
 
       function toggleSeconds() {
@@ -654,7 +767,11 @@
       }
 
       updateClock();
-      setInterval(updateClock, 1000);
+      
+      // Start clock initially (if on clock screen)
+      if (document.getElementById('masterClock').style.display !== 'none') {
+        startClock();
+      }
 
       document.addEventListener("DOMContentLoaded", function() {
     const clfsButton = document.getElementById("clfsButton");
@@ -665,66 +782,12 @@
     });
 });
 
-function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-            document.documentElement.msRequestFullscreen();
-        }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
-        }
-    }
-}
 
-     // Start of F for fullscreen --------------------------------------------------
-      // Check if fullscreen
-      function isFullscreen() {
-          return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-      }
-
-      // Toggle fullscreen
-      function toggleFullscreenF(element) {
-          if (!isFullscreen()) {
-              if (element.requestFullscreen) {
-                  element.requestFullscreen();
-              } else if (element.webkitRequestFullscreen) {
-                  element.webkitRequestFullscreen();
-              } else if (element.mozRequestFullScreen) {
-                  element.mozRequestFullScreen();
-              } else if (element.msRequestFullscreen) {
-                  element.msRequestFullscreen();
-              }
-          } else {
-              if (document.exitFullscreen) {
-                  document.exitFullscreen();
-              } else if (document.webkitExitFullscreen) {
-                  document.webkitExitFullscreen();
-              } else if (document.mozCancelFullScreen) {
-                  document.mozCancelFullScreen();
-              } else if (document.msExitFullscreen) {
-                  document.msExitFullscreen();
-              }
-          }
-      }
-
-      // listener for 'key' press (event)
+     // F key fullscreen handler
       document.addEventListener('keydown', function(event) {
           // Check if the pressed key is 'F'
           if (event.key === 'F' || event.key === 'f') {
-              toggleFullscreenF(document.documentElement);
+              toggleFullscreen();
           }
       });
 
